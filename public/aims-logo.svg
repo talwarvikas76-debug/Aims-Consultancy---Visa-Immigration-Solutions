@@ -1,0 +1,29 @@
+<svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aims-left" x1="200" y1="30" x2="65" y2="330" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff3344" />
+      <stop offset="40%" stop-color="#e11124" />
+      <stop offset="100%" stop-color="#9b0012" />
+    </linearGradient>
+    <linearGradient id="aims-right" x1="200" y1="30" x2="375" y2="330" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff2a3b" />
+      <stop offset="45%" stop-color="#d90429" />
+      <stop offset="100%" stop-color="#7a000a" />
+    </linearGradient>
+    <linearGradient id="aims-bevel" x1="335" y1="300" x2="375" y2="330" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a30919" />
+      <stop offset="100%" stop-color="#550007" />
+    </linearGradient>
+    <linearGradient id="aims-sw" x1="135" y1="320" x2="220" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e50914" />
+      <stop offset="50%" stop-color="#ff3848" />
+      <stop offset="100%" stop-color="#9b0012" />
+    </linearGradient>
+  </defs>
+  <path d="M200 30L65 330L125 330L200 145L235 225L250 190L200 30Z" fill="url(#aims-left)" />
+  <path d="M200 30L335 300L300 330L230 330L275 225L200 30Z" fill="url(#aims-right)" />
+  <path d="M335 300L375 330L300 330L335 300Z" fill="url(#aims-bevel)" />
+  <path d="M200 165L180 210L200 205L200 165Z" fill="#a80a18" />
+  <path d="M200 165L220 210L200 205L200 165Z" fill="#ff2a3b" />
+  <path d="M135 320C155 265 200 220 220 220C195 240 160 285 135 320Z" fill="url(#aims-sw)" />
+</svg>

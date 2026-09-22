@@ -1,0 +1,6 @@
+{
+  "name": "AIMS Consultancy | Travel & Visa Solutions",
+  "description": "Professional visa, passport, air ticketing, and immigration consultancy platform based in Hoshiarpur, Punjab with interactive consultation booking and appointment scheduling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
