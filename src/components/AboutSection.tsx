@@ -15,6 +15,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { COMPANY_DETAILS } from '../data/aimsData';
+import { AimsLogo } from './AimsLogo';
 
 export const AboutSection: React.FC = () => {
   const [showPledges, setShowPledges] = useState(false);
@@ -48,9 +49,9 @@ export const AboutSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
-            <Award className="w-3.5 h-3.5 text-blue-600" />
-            <span>Who We Are & Our Heritage</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-red-200/90 text-slate-800 text-xs font-bold shadow-xs">
+            <AimsLogo variant="emblem" className="w-5 h-5" />
+            <span className="text-slate-900">Who We Are & Our Heritage</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
             Guiding Punjab’s Global Aspirations with Trust & Transparency
@@ -120,6 +121,36 @@ export const AboutSection: React.FC = () => {
                   <span>100% Free Initial Assessment</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Official Brand Identity & Accreditation Showcase Card */}
+        <div className="mt-10 bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-center gap-8">
+          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center shrink-0 w-full sm:w-auto">
+            <AimsLogo variant="full" showTagline={true} className="w-56" />
+          </div>
+          <div className="space-y-3 text-left flex-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#d90429] text-xs font-bold border border-red-200">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Official Brand Crest & Mission</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-display">
+              Aims Consultancy: Education, Immigration & Travel
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Operating under statutory compliance from our headquarters opposite the District Courts on Court Road in Hoshiarpur, our hallmark 3D red crest signifies dynamic flight, consular precision, and uncompromising dedication to each applicant’s international trajectory.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-bold text-slate-700 pt-1">
+              <span className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/70">
+                <CheckCircle2 className="w-4 h-4 text-[#d90429] shrink-0" /> Registered Overseas Practice
+              </span>
+              <span className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/70">
+                <CheckCircle2 className="w-4 h-4 text-[#d90429] shrink-0" /> IRCC, UKVI & MEA Filings
+              </span>
+              <span className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/70">
+                <CheckCircle2 className="w-4 h-4 text-[#d90429] shrink-0" /> 100% Ethical Advisory
+              </span>
             </div>
           </div>
         </div>

@@ -20,6 +20,7 @@ import {
   getWhatsAppDeliveryUrl, 
   WhatsAppRoutingInfo 
 } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 interface ContactSectionProps {
   initialService?: string;
@@ -64,8 +65,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
-            <MapPin className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-red-200/90 text-slate-800 text-xs font-bold tracking-wide shadow-xs">
+            <AimsLogo variant="emblem" className="w-4 h-4" />
             <span>Connect with Our Advisory Desk</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -85,9 +86,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
             {/* Status Card */}
             <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 shadow-md">
               <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-                <h3 className="text-base font-bold font-display text-slate-900">
-                  Head Office Hoshiarpur
-                </h3>
+                <div className="flex items-center gap-2">
+                  <AimsLogo variant="emblem" className="w-6 h-6" />
+                  <h3 className="text-base font-bold font-display text-slate-900">
+                    Head Office Hoshiarpur
+                  </h3>
+                </div>
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                   routing.isOpen 
                     ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' 

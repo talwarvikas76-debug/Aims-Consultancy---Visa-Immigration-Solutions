@@ -1,0 +1,192 @@
+<svg viewBox="0 0 1000 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Soft 3D Drop Shadow matching IMAGE - NEW.jpg -->
+    <filter id="aims-shadow" x="-15%" y="-10%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="8" dy="18" stdDeviation="16" flood-color="#7a0010" flood-opacity="0.22" />
+      <feDropShadow dx="4" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.18" />
+    </filter>
+
+    <filter id="pyramid-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#4a0008" flood-opacity="0.28" />
+    </filter>
+
+    <!-- Gradients matching IMAGE - NEW.jpg -->
+    <!-- Left Leg: Outer Facet (Shadow side) -->
+    <linearGradient id="left-outer-facet" x1="500" y1="75" x2="170" y2="670" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d90429" />
+      <stop offset="35%" stop-color="#b80018" />
+      <stop offset="75%" stop-color="#8f0010" />
+      <stop offset="100%" stop-color="#66000a" />
+    </linearGradient>
+
+    <!-- Left Leg: Inner Facet (Light side) -->
+    <linearGradient id="left-inner-facet" x1="500" y1="75" x2="330" y2="580" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff2e47" />
+      <stop offset="40%" stop-color="#ef233c" />
+      <stop offset="85%" stop-color="#d90429" />
+      <stop offset="100%" stop-color="#ba001a" />
+    </linearGradient>
+
+    <!-- Right Leg: Front/Upper Facet (Vibrant highlight side) -->
+    <linearGradient id="right-front-facet" x1="500" y1="75" x2="710" y2="570" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff475e" />
+      <stop offset="25%" stop-color="#ef233c" />
+      <stop offset="65%" stop-color="#d90429" />
+      <stop offset="100%" stop-color="#b50017" />
+    </linearGradient>
+
+    <!-- Right Leg: 3D Outer Bevel Extrusion -->
+    <linearGradient id="right-bevel-facet" x1="680" y1="360" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a80016" />
+      <stop offset="45%" stop-color="#7d000f" />
+      <stop offset="80%" stop-color="#540008" />
+      <stop offset="100%" stop-color="#360004" />
+    </linearGradient>
+
+    <!-- Right Foot 3D Bottom Facet -->
+    <linearGradient id="right-foot-facet" x1="615" y1="590" x2="795" y2="670" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6e000d" />
+      <stop offset="50%" stop-color="#450007" />
+      <stop offset="100%" stop-color="#240003" />
+    </linearGradient>
+
+    <!-- Left Foot 3D Bottom Facet -->
+    <linearGradient id="left-foot-facet" x1="170" y1="670" x2="305" y2="670" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4d0008" />
+      <stop offset="100%" stop-color="#80000e" />
+    </linearGradient>
+
+    <!-- Central Pyramid: Left Facet -->
+    <linearGradient id="pyramid-left" x1="500" y1="410" x2="450" y2="495" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c9041e" />
+      <stop offset="100%" stop-color="#80000e" />
+    </linearGradient>
+
+    <!-- Central Pyramid: Right Facet -->
+    <linearGradient id="pyramid-right" x1="500" y1="410" x2="550" y2="495" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff3d55" />
+      <stop offset="60%" stop-color="#ef233c" />
+      <stop offset="100%" stop-color="#c40018" />
+    </linearGradient>
+
+    <!-- Dynamic Swoosh / Wing -->
+    <linearGradient id="swoosh-gradient" x1="340" y1="580" x2="550" y2="515" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#990012" />
+      <stop offset="30%" stop-color="#d90429" />
+      <stop offset="70%" stop-color="#ef233c" />
+      <stop offset="100%" stop-color="#ff475e" />
+    </linearGradient>
+
+    <!-- Swoosh Underside Shadow -->
+    <linearGradient id="swoosh-shadow" x1="360" y1="600" x2="520" y2="535" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#66000a" />
+      <stop offset="100%" stop-color="#a80015" />
+    </linearGradient>
+  </defs>
+
+  <!-- EMBLEM GROUP WITH 3D DROP SHADOW -->
+  <g filter="url(#aims-shadow)">
+    <!-- 1. Right Leg Outer 3D Beveled Facet (Thick 3D Extrusion) -->
+    <path
+      d="M 500 75 L 740 540 L 795 595 L 730 670 L 615 670 L 665 590 L 500 75 Z"
+      fill="url(#right-bevel-facet)"
+    />
+
+    <!-- 2. Right Foot 3D Bottom Facet -->
+    <path
+      d="M 740 540 L 795 595 L 730 670 L 615 670 L 665 590 Z"
+      fill="url(#right-foot-facet)"
+    />
+
+    <!-- 3. Left Foot 3D Bottom Wedge -->
+    <path
+      d="M 170 670 L 275 590 L 305 670 Z"
+      fill="url(#left-foot-facet)"
+    />
+
+    <!-- 4. Left Leg Outer Beveled Facet -->
+    <path
+      d="M 500 75 L 170 670 L 275 590 L 500 75 Z"
+      fill="url(#left-outer-facet)"
+    />
+
+    <!-- 5. Left Leg Inner Front Facet -->
+    <path
+      d="M 500 75 L 275 590 L 375 560 L 500 315 Z"
+      fill="url(#left-inner-facet)"
+    />
+
+    <!-- 6. Right Leg Front Facet (Bright Highlight Face) -->
+    <path
+      d="M 500 75 L 500 315 L 615 570 L 665 590 L 500 75 Z"
+      fill="url(#right-front-facet)"
+    />
+
+    <!-- 7. Dynamic Swoosh / Crossbar Ribbon (Curving Upward to the Right) -->
+    <!-- Swoosh Underbody / Shadow -->
+    <path
+      d="M 335 580 C 375 570 430 550 550 518 C 475 542 410 572 355 620 C 342 605 336 592 335 580 Z"
+      fill="url(#swoosh-shadow)"
+    />
+    <!-- Swoosh Upper Blade (Glowing Top Surface) -->
+    <path
+      d="M 345 565 C 390 548 450 530 550 518 C 470 535 415 560 365 590 C 352 580 347 572 345 565 Z"
+      fill="url(#swoosh-gradient)"
+    />
+
+    <!-- 8. Central Floating 3D Pyramid / Arrowhead -->
+    <g filter="url(#pyramid-shadow)">
+      <!-- Left Facet -->
+      <path
+        d="M 500 410 L 450 495 L 500 480 Z"
+        fill="url(#pyramid-left)"
+      />
+      <!-- Right Facet (Highlight) -->
+      <path
+        d="M 500 410 L 550 495 L 500 480 Z"
+        fill="url(#pyramid-right)"
+      />
+      <!-- Bottom Base Shadow Crease -->
+      <path
+        d="M 450 495 L 500 480 L 550 495 L 500 488 Z"
+        fill="#520008"
+      />
+    </g>
+
+    <!-- 9. Apex Central Bevel Ridge Highlight Line -->
+    <line
+      x1="500"
+      y1="75"
+      x2="500"
+      y2="315"
+      stroke="#ffffff"
+      stroke-width="2.5"
+      stroke-opacity="0.45"
+      stroke-linecap="round"
+    />
+
+    <!-- Left Ridge Specular Highlight -->
+    <line
+      x1="500"
+      y1="75"
+      x2="275"
+      y2="590"
+      stroke="#ffffff"
+      stroke-width="1.8"
+      stroke-opacity="0.3"
+      stroke-linecap="round"
+    />
+
+    <!-- Right Ridge Specular Highlight -->
+    <line
+      x1="500"
+      y1="75"
+      x2="665"
+      y2="590"
+      stroke="#ffffff"
+      stroke-width="2.2"
+      stroke-opacity="0.4"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>

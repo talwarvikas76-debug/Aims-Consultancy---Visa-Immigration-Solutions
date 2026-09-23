@@ -17,6 +17,7 @@ import {
 import { Language } from '../types';
 import { TRANSLATIONS } from '../utils/translations';
 import { getWhatsAppRoutingDetails, getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 interface HeroSectionProps {
   onOpenBooking: () => void;
@@ -121,12 +122,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Column: Hero Content & Cheerful Travelers (Matching image.png) */}
           <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
             
-            {/* Top Quiet Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-semibold shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <span>Punjab's Leading Visa & Immigration Hub</span>
-              <span className="text-blue-300">•</span>
-              <span className="text-slate-600 font-medium">Hoshiarpur</span>
+            {/* Top Quiet Badge with Official 3D Logo Emblem */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-red-200/90 text-slate-800 text-xs font-semibold shadow-xs">
+              <AimsLogo variant="emblem" className="w-5 h-5" />
+              <span className="font-bold text-slate-900">Aims Consultancy</span>
+              <span className="text-red-300">•</span>
+              <span className="text-slate-600 font-medium">Court Road, Hoshiarpur</span>
             </div>
 
             {/* Main Headline from image.png */}
@@ -211,7 +212,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* The Main High-Converting Floating White Card */}
             <div className="w-full max-w-md bg-white rounded-2xl p-6 sm:p-7 shadow-2xl border border-slate-200/90 relative">
               
-              <div className="mb-5">
+              <div className="mb-5 pb-3 border-b border-slate-100">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <AimsLogo variant="emblem" className="w-7 h-7" />
+                    <div>
+                      <span className="text-xs font-black text-[#d90429] tracking-tight font-display block leading-none">
+                        Aims Consultancy
+                      </span>
+                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                        Assessment Desk
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    100% Free
+                  </span>
+                </div>
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-display">
                   {t.cardTitle}
                 </h3>

@@ -139,7 +139,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenEligibility
       {/* Bottom Legal & Copyright Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400">
         <div>
-          <p>© {new Date().getFullYear()} AIMS Consultancy. All rights reserved.</p>
+          <div className="flex items-center gap-2">
+            <AimsLogo variant="emblem" className="w-4 h-4 opacity-80" />
+            <p>© {new Date().getFullYear()} AIMS Consultancy. All rights reserved.</p>
+          </div>
           <p className="text-[10px] text-slate-500 mt-0.5">
             Disclaimer: AIMS Consultancy is an independent private consultancy firm registered in Punjab, India. We are not an official government embassy or high commission.
           </p>

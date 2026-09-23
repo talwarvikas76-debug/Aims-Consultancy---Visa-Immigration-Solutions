@@ -138,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}
             className="flex items-center gap-2 group cursor-pointer"
           >
-            <AimsLogo variant="horizontal" theme="blue" showTagline={true} />
+            <AimsLogo variant="horizontal" theme="light" showTagline={true} />
           </a>
 
           {/* Desktop Nav Items */}
@@ -383,6 +383,17 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fadeIn shadow-lg">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <AimsLogo variant="horizontal" theme="light" showTagline={true} />
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <span className="text-xs font-semibold text-slate-500">Choose Language:</span>
             <div className="flex gap-1.5">

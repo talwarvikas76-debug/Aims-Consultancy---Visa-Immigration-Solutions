@@ -149,14 +149,19 @@ export const PrintableVoucherModal: React.FC<PrintableVoucherModalProps> = ({
             </ul>
           </div>
 
-          {/* Footer note */}
-          <div className="border-t border-slate-200 pt-4 text-center text-[11px] text-slate-500">
-            <p>
-              For rescheduling or urgent queries: Working hours WhatsApp/Phone <strong>91933-19128</strong> • After-hours <strong>95927-47000</strong>.
-            </p>
-            <p className="mt-0.5">
-              AIMS Consultancy • Hoshiarpur, Punjab 146001 • Mon-Sat 9:00 AM - 6:00 PM
-            </p>
+          {/* Footer note & Stamp */}
+          <div className="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+            <div className="text-left space-y-0.5">
+              <p>
+                For rescheduling or urgent queries: Working hours WhatsApp/Phone <strong>91933-19128</strong> • After-hours <strong>95927-47000</strong>.
+              </p>
+              <p>
+                Aims Consultancy • Court Road, Opposite District Courts, Hoshiarpur, Punjab 146001
+              </p>
+            </div>
+            <div className="shrink-0">
+              <AimsLogo variant="badge" className="bg-slate-50 border-slate-200" />
+            </div>
           </div>
 
         </div>

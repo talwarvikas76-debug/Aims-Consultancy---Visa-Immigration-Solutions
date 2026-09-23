@@ -1,109 +1,148 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface AimsLogoProps {
   className?: string;
-  variant?: 'full' | 'emblem' | 'horizontal';
+  variant?: 'full' | 'emblem' | 'horizontal' | 'badge';
   theme?: 'dark' | 'light' | 'auto' | 'blue';
   showTagline?: boolean;
 }
 
 export const AimsLogo: React.FC<AimsLogoProps> = ({
-  className = 'h-10 w-auto',
+  className = '',
   variant = 'horizontal',
-  theme = 'blue',
+  theme = 'light',
   showTagline = true,
 }) => {
-  // Standalone Emblem (Icon only)
+  const isDark = theme === 'dark';
+  const [emblemError, setEmblemError] = useState(false);
+  const [fullError, setFullError] = useState(false);
+
+  // Standalone Emblem (Icon only) - Loads official cutout from Gemini generation
   if (variant === 'emblem') {
     return (
-      <svg
-        viewBox="0 0 100 100"
-        className={className}
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="aims-blue-wing-1" x1="10" y1="10" x2="80" y2="90" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#0284c7" />
-            <stop offset="50%" stopColor="#2563eb" />
-            <stop offset="100%" stopColor="#1e3a8a" />
-          </linearGradient>
-          <linearGradient id="aims-cyan-wing-2" x1="40" y1="20" x2="90" y2="80" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#38bdf8" />
-            <stop offset="100%" stopColor="#0284c7" />
-          </linearGradient>
-        </defs>
-
-        {/* Dynamic Stylized 'A' Wings matching image */}
-        <path
-          d="M48 12C36 28 20 54 12 78C18 78 28 72 36 62C42 54 48 42 50 32C52 44 60 56 68 64C76 72 84 76 90 76C82 52 64 26 48 12Z"
-          fill="url(#aims-blue-wing-1)"
-        />
-        <path
-          d="M50 32C52 45 60 62 70 70C78 78 86 80 92 80C88 68 80 50 72 38C64 26 56 18 50 14V32Z"
-          fill="url(#aims-cyan-wing-2)"
-        />
-        <path
-          d="M32 64C42 61 58 61 68 64C62 58 58 54 50 54C42 54 38 58 32 64Z"
-          fill="#60a5fa"
-        />
-      </svg>
+      <img
+        src={emblemError ? '/aims-logo-mark.svg' : '/aims-logo-mark-transparent.png'}
+        onError={() => setEmblemError(true)}
+        alt="Aims Consultancy 3D Red Crest"
+        className={`object-contain shrink-0 drop-shadow-sm transition-transform duration-200 ${className || 'w-10 h-10'}`}
+        loading="lazy"
+        decoding="async"
+      />
     );
   }
 
-  // Horizontal variant (default)
-  return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      {/* 3D Dynamic Emblem matching image.png */}
-      <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full drop-shadow-sm"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <linearGradient id="aims-blue-g1" x1="10" y1="10" x2="80" y2="90" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#0284c7" />
-              <stop offset="50%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1d4ed8" />
-            </linearGradient>
-            <linearGradient id="aims-cyan-g2" x1="40" y1="20" x2="90" y2="80" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#38bdf8" />
-              <stop offset="100%" stopColor="#0ea5e9" />
-            </linearGradient>
-          </defs>
-
-          {/* Left Wing / Apex */}
-          <path
-            d="M48 12C36 28 20 54 12 78C18 78 28 72 36 62C42 54 48 42 50 32C52 44 60 56 68 64C76 72 84 76 90 76C82 52 64 26 48 12Z"
-            fill="url(#aims-blue-g1)"
-          />
-          {/* Right Accented Wing */}
-          <path
-            d="M50 32C52 45 60 62 70 70C78 78 86 80 92 80C88 68 80 50 72 38C64 26 56 18 50 14V32Z"
-            fill="url(#aims-cyan-g2)"
-          />
-          {/* Crossbar Accent */}
-          <path
-            d="M32 64C42 61 58 61 68 64C62 58 58 54 50 54C42 54 38 58 32 64Z"
-            fill="#93c5fd"
-          />
-        </svg>
+  // Circular / Shield Official Stamp Badge
+  if (variant === 'badge') {
+    return (
+      <div className={`inline-flex items-center gap-2.5 px-3 py-1.5 rounded-2xl bg-white border border-red-200/90 shadow-xs ${className}`}>
+        <img
+          src={emblemError ? '/aims-logo-mark.svg' : '/aims-logo-mark-transparent.png'}
+          onError={() => setEmblemError(true)}
+          alt="Aims Consultancy Verified Crest"
+          className="w-8 h-8 object-contain shrink-0 drop-shadow-xs"
+          loading="lazy"
+        />
+        <div className="flex flex-col text-left leading-tight">
+          <span className="text-xs font-black text-[#d90429] tracking-tight font-display">
+            Aims Consultancy
+          </span>
+          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
+            Official Advisory Desk
+          </span>
+        </div>
       </div>
+    );
+  }
 
-      {/* Brand Text Typography as given in image */}
-      <div className="flex flex-col">
-        <div className="flex items-baseline tracking-tight">
-          <span className="text-2xl sm:text-3xl font-black text-[#1e40af] tracking-tight font-display">
-            AIMS
+  // Full Vertical Stack variant (The complete official artwork from the Gemini session)
+  if (variant === 'full') {
+    return (
+      <div className={`flex flex-col items-center text-center select-none ${className}`}>
+        {/* Render the authentic high-resolution artwork directly from Gemini */}
+        {!fullError ? (
+          <div className="relative group overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm bg-white p-2">
+            <img
+              src="/aims-logo-new.png"
+              onError={() => setFullError(true)}
+              alt="Aims Consultancy Official Logo - Education | Immigration | Travel"
+              className="w-56 sm:w-64 md:w-72 h-auto object-contain rounded-xl"
+              loading="eager"
+            />
+          </div>
+        ) : (
+          /* High-fidelity vector fallback */
+          <>
+            <img
+              src="/aims-logo-mark.svg"
+              alt="Aims Consultancy 3D Red Crest"
+              className="w-28 h-24 sm:w-32 sm:h-28 object-contain drop-shadow-md"
+              loading="eager"
+            />
+            <div className="mt-3 relative flex items-baseline justify-center">
+              <div className="text-2xl sm:text-3xl font-black text-[#d90429] tracking-tight font-display flex items-baseline">
+                <span>A</span>
+                <span className="relative inline-block mx-[0.5px]">
+                  <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[3.5px] border-l-transparent border-r-[3.5px] border-r-transparent border-b-[5.5px] border-b-[#d90429]" />
+                  <span className="inline-block mt-0.5">ı</span>
+                </span>
+                <span>ms&nbsp;</span>
+                <span>Consultancy</span>
+              </div>
+            </div>
+            {showTagline && (
+              <div className={`mt-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] ${
+                isDark ? 'text-slate-300' : 'text-slate-700'
+              }`}>
+                <span>EDUCATION</span>
+                <span className="text-[#d90429] font-black mx-2">|</span>
+                <span>IMMIGRATION</span>
+                <span className="text-[#d90429] font-black mx-2">|</span>
+                <span>TRAVEL</span>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
+
+  // Horizontal variant (Standard Header & Navigation Bar)
+  return (
+    <div className={`flex items-center gap-3 select-none ${className}`}>
+      {/* 3D Crest Emblem extracted from the Gemini design */}
+      <img
+        src={emblemError ? '/aims-logo-mark.svg' : '/aims-logo-mark-transparent.png'}
+        onError={() => setEmblemError(true)}
+        alt="Aims Consultancy Logo"
+        className="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs"
+        loading="eager"
+      />
+
+      {/* Brand Typography & Tagline */}
+      <div className="flex flex-col leading-tight">
+        <div className="flex items-baseline">
+          <span className="text-xl sm:text-2xl font-black text-[#d90429] tracking-tight font-display flex items-baseline">
+            <span>A</span>
+            {/* The signature upward-pointing arrow accent on the 'i' */}
+            <span className="relative inline-block mx-[0.5px]">
+              <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[3px] border-l-transparent border-r-[3px] border-r-transparent border-b-[4.5px] border-b-[#d90429]" />
+              <span className="inline-block mt-0.5">ı</span>
+            </span>
+            <span>ms&nbsp;</span>
+            <span className="tracking-tight">Consultancy</span>
           </span>
         </div>
 
         {showTagline && (
-          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 tracking-normal -mt-0.5">
-            Visa & Immigration Consultancy
-          </span>
+          <div className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.18em] flex items-center gap-1.5 -mt-0.5 ${
+            isDark ? 'text-slate-400' : 'text-slate-600'
+          }`}>
+            <span>Education</span>
+            <span className="text-[#d90429] font-black text-[9px]">•</span>
+            <span>Immigration</span>
+            <span className="text-[#d90429] font-black text-[9px]">•</span>
+            <span>Travel</span>
+          </div>
         )}
       </div>
     </div>

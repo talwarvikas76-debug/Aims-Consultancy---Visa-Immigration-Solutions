@@ -22,6 +22,7 @@ import {
   Compass
 } from 'lucide-react';
 import { getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 interface EligibilityCheckerModalProps {
   isOpen: boolean;
@@ -124,9 +125,14 @@ Please provide my customized visa roadmap and document checklist.`;
           </button>
 
           <div className="relative z-10 max-w-md">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/20 text-white text-[11px] font-bold mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-blue-200" />
-              <span>Multi-Step Interactive Assessor</span>
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="p-1.5 bg-white rounded-xl shadow-xs">
+                <AimsLogo variant="emblem" className="w-6 h-6" />
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[11px] font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-blue-200" />
+                <span>Aims Consultancy • Eligibility Assessor</span>
+              </div>
             </div>
             <h3 className="text-xl sm:text-2xl font-black tracking-tight font-display">
               Visa Eligibility Quiz

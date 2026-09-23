@@ -18,6 +18,7 @@ import {
 import { INITIAL_TRACK_RECORDS } from '../data/hubData';
 import { ApplicationTrackRecord, ApplicationDocument } from '../types';
 import { getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 export const ApplicationTracker: React.FC = () => {
   const [searchRef, setSearchRef] = useState('AIMS-8492');
@@ -72,9 +73,9 @@ export const ApplicationTracker: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/80 text-blue-800 text-xs font-bold mb-3">
-            <Lock className="w-3.5 h-3.5 text-blue-600" />
-            <span>Client Self-Service Portal</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-red-200/90 text-slate-800 text-xs font-bold mb-3 shadow-xs">
+            <AimsLogo variant="emblem" className="w-4 h-4" />
+            <span>AIMS Client Self-Service Portal</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight font-display">
             Live Visa Application Tracker
@@ -137,17 +138,20 @@ export const ApplicationTracker: React.FC = () => {
           {/* Dashboard Header Bar */}
           <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-2xl">{activeRecord.flag}</span>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
+                  <AimsLogo variant="emblem" className="w-8 h-8" />
+                </div>
                 <div>
                   <div className="flex items-center gap-2">
+                    <span className="text-xl">{activeRecord.flag}</span>
                     <h3 className="text-lg font-black tracking-tight">{activeRecord.applicantName}</h3>
                     <span className="px-2 py-0.5 rounded bg-blue-600/40 border border-blue-400/30 text-blue-200 text-[10px] font-mono font-bold">
                       {activeRecord.refId}
                     </span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    {activeRecord.destination} • {activeRecord.visaType}
+                    AIMS Dossier: {activeRecord.destination} • {activeRecord.visaType}
                   </p>
                 </div>
               </div>

@@ -11,6 +11,7 @@ import {
 import { Language } from '../types';
 import { TRANSLATIONS } from '../utils/translations';
 import { COMPANY_DETAILS } from '../data/aimsData';
+import { AimsLogo } from './AimsLogo';
 
 interface WhyChooseAimsProps {
   currentLanguage: Language;
@@ -74,6 +75,10 @@ export const WhyChooseAims: React.FC<WhyChooseAimsProps> = ({
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-50 border border-red-200/80 mb-4 shadow-2xs">
+            <AimsLogo variant="emblem" className="w-5 h-5" />
+            <span className="text-xs font-bold text-slate-900">Aims Consultancy Benchmark Standards</span>
+          </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight font-display">
             {t.whyChooseAimsTitle}
           </h2>

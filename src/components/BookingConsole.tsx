@@ -23,6 +23,7 @@ import confetti from 'canvas-confetti';
 import { BookingFormData } from '../types';
 import { COMPANY_DETAILS } from '../data/aimsData';
 import { getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 interface BookingConsoleProps {
   prefillData?: Partial<BookingFormData>;
@@ -133,8 +134,8 @@ export const BookingConsole: React.FC<BookingConsoleProps> = ({
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold tracking-wide uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-slate-800 border border-red-200/90 text-xs font-bold tracking-wide shadow-xs">
+            <AimsLogo variant="emblem" className="w-4 h-4" />
             <span>100% Free Consultation • Zero Advance Charges</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
@@ -433,17 +434,14 @@ export const BookingConsole: React.FC<BookingConsoleProps> = ({
               </div>
 
               {/* Digital Pass Card */}
-              <div className="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-5 text-left space-y-3 relative shadow-md">
+              <div className="max-w-md mx-auto bg-white border border-slate-200 rounded-2xl p-5 text-left space-y-3 relative shadow-md">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Booking Reference</span>
-                    <div className="text-base font-black text-blue-700 font-mono">
+                  <AimsLogo variant="horizontal" theme="light" showTagline={false} className="scale-90 origin-left" />
+                  <div className="text-right">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Consultation Pass</span>
+                    <div className="text-sm font-mono font-black text-[#d90429]">
                       {formData.bookingRef}
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Charges</span>
-                    <span className="block text-xs font-bold text-emerald-600">100% Free (₹0)</span>
                   </div>
                 </div>
 
