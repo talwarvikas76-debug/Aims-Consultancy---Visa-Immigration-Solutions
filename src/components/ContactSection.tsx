@@ -6,13 +6,13 @@ import {
   Clock, 
   Send, 
   CheckCircle2, 
-  MessageSquare,
-  ExternalLink,
-  ShieldCheck,
-  MessageCircle,
-  ChevronDown,
-  ChevronUp,
-  Car
+  MessageSquare, 
+  ExternalLink, 
+  ShieldCheck, 
+  MessageCircle, 
+  ChevronDown, 
+  ChevronUp, 
+  Car 
 } from 'lucide-react';
 import { COMPANY_DETAILS } from '../data/aimsData';
 import { 
@@ -49,7 +49,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
     setRouting(getWhatsAppRoutingDetails());
     const interval = setInterval(() => {
       setRouting(getWhatsAppRoutingDetails());
-    }, 30000);
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -59,19 +59,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 bg-[#060f0c] border-b border-emerald-950/80 text-slate-200">
+    <section id="contact" className="py-16 sm:py-20 bg-white border-b border-slate-200 text-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/50 text-emerald-300 text-xs font-bold tracking-wide uppercase">
-            <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
+            <MapPin className="w-3.5 h-3.5 text-blue-600" />
             <span>Connect with Our Advisory Desk</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
             Get in Touch with AIMS Consultancy
           </h2>
-          <p className="text-emerald-100/70 text-base">
+          <p className="text-slate-600 text-base">
             Drop by our main office in Hoshiarpur, Punjab, call our helpline, or send a quick inquiry message below for immediate advisory support.
           </p>
         </div>
@@ -83,283 +83,209 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
           <div className="lg:col-span-5 space-y-6">
             
             {/* Status Card */}
-            <div className="p-6 rounded-2xl bg-[#091712]/90 border border-emerald-950/90 text-white shadow-2xl relative overflow-hidden backdrop-blur-sm">
-              <div className="flex items-center justify-between pb-4 border-b border-emerald-950">
-                <h3 className="text-base font-bold font-display text-white">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 shadow-md">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+                <h3 className="text-base font-bold font-display text-slate-900">
                   Head Office Hoshiarpur
                 </h3>
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                   routing.isOpen 
-                    ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-700/60' 
-                    : 'bg-amber-950/70 text-amber-300 border border-amber-800/60'
+                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' 
+                    : 'bg-amber-100 text-amber-800 border border-amber-200'
                 }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${routing.isOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${routing.isOpen ? 'bg-emerald-600 animate-pulse' : 'bg-amber-600'}`} />
                   <span>{routing.isOpen ? 'Open Now (9AM–6PM)' : 'Closed Now (Opens 9AM)'}</span>
                 </span>
               </div>
 
               <div className="mt-4 space-y-3 text-xs sm:text-sm">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#06110d] border border-emerald-900/60 flex items-center justify-center shrink-0 text-emerald-400">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 text-blue-600">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[11px] text-emerald-300/70 block">Physical Address</span>
-                    <strong className="text-slate-200">{COMPANY_DETAILS.address}</strong>
+                    <span className="text-[11px] text-slate-500 block">Physical Address</span>
+                    <strong className="text-slate-900">{COMPANY_DETAILS.address}</strong>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#06110d] border border-emerald-900/60 flex items-center justify-center shrink-0 text-emerald-400">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 text-blue-600">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[11px] text-emerald-300/70 block">Direct Telephone / Office WhatsApp</span>
-                    <a href={`tel:${COMPANY_DETAILS.phoneRaw}`} className="text-emerald-300 font-bold hover:underline">
+                    <span className="text-[11px] text-slate-500 block">Direct Telephone / Office WhatsApp</span>
+                    <a href={`tel:${COMPANY_DETAILS.phoneRaw}`} className="text-blue-700 font-bold hover:underline">
                       {COMPANY_DETAILS.phone}
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#06110d] border border-emerald-900/60 flex items-center justify-center shrink-0 text-emerald-400">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] text-emerald-300/70 block">Official Email</span>
-                    <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-slate-200 hover:text-emerald-300">
-                      {COMPANY_DETAILS.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#06110d] border border-emerald-900/60 flex items-center justify-center shrink-0 text-emerald-400">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 text-blue-600">
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[11px] text-emerald-300/70 block">Operating Hours</span>
-                    <span className="text-slate-200">{COMPANY_DETAILS.workingHours}</span>
-                    <span className="block text-[11px] text-slate-400">{COMPANY_DETAILS.closedDays}</span>
+                    <span className="text-[11px] text-slate-500 block">Operating Hours (IST)</span>
+                    <span className="text-slate-700 font-medium">Monday to Saturday: 09:00 AM – 06:00 PM</span>
+                    <span className="block text-[11px] text-amber-600 mt-0.5">Sunday: Closed for Consular Processing</span>
                   </div>
                 </div>
               </div>
 
-              {/* Collapsible Landmarks & Parking Info */}
-              <div className="mt-4 pt-3 border-t border-emerald-950">
-                <button
-                  onClick={() => setShowLandmarks(!showLandmarks)}
-                  className="w-full py-1.5 px-2.5 rounded-lg bg-[#06110d] hover:bg-[#0c221a] border border-emerald-900/60 text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 transition-colors flex items-center justify-between cursor-pointer"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Car className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>✦ {showLandmarks ? 'Hide Landmarks & Parking' : 'View Driving Landmarks & Parking Details'}</span>
-                  </span>
-                  {showLandmarks ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                </button>
-
-                {showLandmarks && (
-                  <div className="mt-2.5 p-3 rounded-xl bg-[#06110d] border border-emerald-800/40 text-[11px] text-slate-300 space-y-1.5 animate-fadeIn">
-                    <p><strong className="text-emerald-300">Landmarks:</strong> Located near Sessions Court & District Administrative Complex on Court Road.</p>
-                    <p><strong className="text-emerald-300">Parking:</strong> Free dedicated client four-wheeler & two-wheeler parking available directly in front of the office premises.</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Direct WhatsApp Action with automatic schedule routing */}
-              <div className="mt-4 pt-4 border-t border-emerald-950 space-y-2">
+              {/* Instant WhatsApp Action */}
+              <div className="mt-6 pt-4 border-t border-slate-200">
                 <a
-                  href={getWhatsAppDeliveryUrl(
-                    `Hello AIMS Consultancy,\n\nI would like to inquire about visa and travel services.\n\n━━━━━━━━━━━━━━━━━━━━\n📍 *Office Routing Status:*\n• Line: ${routing.formattedNumber} (${routing.deskLabel})\n• ${routing.statusDetail}`
-                  )}
+                  href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to inquire about visa and travel services.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-950/80"
+                  className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Chat on WhatsApp ({routing.isOpen ? 'Office: 91933-19128' : 'Duty Desk: 95927-47000'})</span>
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Chat on WhatsApp Directly</span>
                 </a>
-                <p className="text-[10px] text-emerald-200/60 text-center">
-                  Mon–Sat 9AM–6PM IST routed to <strong>91933-19128</strong> • Off-hours to <strong>95927-47000</strong>
-                </p>
               </div>
             </div>
 
-            {/* Map Embed */}
-            <div className="rounded-2xl border border-emerald-950/90 overflow-hidden bg-[#091712]/90 p-2 shadow-xl backdrop-blur-sm">
-              <div className="relative h-48 w-full rounded-xl overflow-hidden bg-slate-900">
-                <iframe
-                  title="AIMS Consultancy Office Location Hoshiarpur"
-                  src="https://maps.google.com/maps?q=Hoshiarpur%20Punjab&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full border-0 opacity-80 contrast-125"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-3 flex items-center justify-between text-xs text-slate-300">
-                <span>Coordinates: 31.5251° N, 75.9184° E</span>
-                <a 
-                  href="https://maps.google.com/?q=Hoshiarpur+Punjab" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-emerald-300 font-bold hover:underline inline-flex items-center gap-1"
-                >
-                  <span>Open in Google Maps</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
+            {/* Landmark Directions Drawer */}
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <button
+                type="button"
+                onClick={() => setShowLandmarks(!showLandmarks)}
+                className="w-full flex items-center justify-between text-left font-bold text-slate-900 cursor-pointer"
+              >
+                <span className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-blue-600" />
+                  <span>How to Reach Court Road Office</span>
+                </span>
+                {showLandmarks ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+
+              {showLandmarks && (
+                <div className="mt-3 pt-3 border-t border-slate-200 space-y-2 text-slate-600 animate-fadeIn">
+                  <p>• Located centrally on Court Road opposite district administrative quarters.</p>
+                  <p>• 5 minutes drive from Hoshiarpur Railway Station and main Bus Stand.</p>
+                  <p>• Ample street parking available for prospective applicants and visiting families.</p>
+                </div>
+              )}
             </div>
 
           </div>
 
-          {/* Right Column: Send Us an Inquiry Form */}
-          <div className="lg:col-span-7 bg-[#091712]/90 border border-emerald-950/90 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
-            <div className="border-b border-emerald-950 pb-4 mb-6">
-              <h3 className="text-xl font-bold text-white font-display">
-                Send Us a Quick Message
-              </h3>
-              <p className="text-xs text-emerald-200/70 mt-1">
-                Fill in your contact details and our team will get back to you within 2-4 business hours.
-              </p>
-            </div>
+          {/* Right Column: Fast Contact Form */}
+          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md">
+            <h3 className="text-lg font-bold text-slate-900 font-display mb-1">
+              Send an Instant Direct Message
+            </h3>
+            <p className="text-xs text-slate-600 mb-6">
+              Fill out your query and our desk counselor will review your file details and get back to you within 2 working hours.
+            </p>
 
             {submitted ? (
-              <div className="text-center py-12 space-y-4 animate-fadeIn">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+              <div className="p-6 text-center space-y-3 bg-white rounded-xl border border-emerald-200 animate-fadeIn">
+                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h4 className="text-lg font-bold text-white font-display">
-                  Inquiry Message Sent Successfully!
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
-                  Thank you, <strong>{formData.name}</strong>. One of our senior advisors will review your requirements for <em>{formData.service}</em> and contact you at <strong>{formData.phone}</strong>.
+                <h4 className="font-bold text-base text-slate-900">Message Dispatched Successfully!</h4>
+                <p className="text-xs text-slate-600 max-w-sm mx-auto">
+                  Thank you, <strong>{formData.name}</strong>. An AIMS visa counselor has received your message regarding {formData.service} and will connect via WhatsApp or Phone shortly.
                 </p>
-                <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
-                  <a
-                    href={getWhatsAppDeliveryUrl(
-                      `Hello AIMS Consultancy,\n\nI submitted an inquiry form on your website:\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Email: ${formData.email}\n• Service: ${formData.service}\n• Message: ${formData.message}\n\n━━━━━━━━━━━━━━━━━━━━\n📍 Routed to: ${routing.formattedNumber} (${routing.deskLabel})\n• Status: ${routing.statusDetail}`
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 shadow-md shadow-emerald-950/80"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5" />
-                    <span>Send to WhatsApp Desk ({routing.isOpen ? '91933-19128' : '95927-47000'})</span>
-                  </a>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({
-                        name: '',
-                        email: '',
-                        phone: '',
-                        service: 'Visa Advisory',
-                        message: '',
-                      });
-                    }}
-                    className="px-4 py-2 bg-[#06110d] hover:bg-[#0c221a] text-white text-xs font-bold rounded-xl transition-colors cursor-pointer border border-emerald-900/60"
-                  >
-                    Send Another Inquiry
-                  </button>
-                </div>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-3 text-xs text-blue-600 font-semibold hover:underline cursor-pointer"
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Your Full Name *
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Full Name *
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Vikas Talwar"
+                      placeholder="e.g. Navjot Kaur"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#06110d] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Contact Phone / WhatsApp *
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Mobile / WhatsApp Number *
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. +91 91933 19128"
+                      placeholder="e.g. +91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#06110d] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
                       Email Address *
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. client@gmail.com"
+                      placeholder="e.g. navjot@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#06110d] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Service Interested In *
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Relevant Category *
                     </label>
                     <select
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#06110d] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs cursor-pointer"
                     >
-                      <option value="Student Visa & Study Permits">Student Visa & Study Permits</option>
-                      <option value="Tourist & Visitor Visa">Tourist & Visitor Visa</option>
-                      <option value="Business Visa">Business Visa</option>
-                      <option value="Passport Assistance (Tatkal/Renewal)">Passport Assistance (Tatkal/Renewal)</option>
-                      <option value="Airline Ticketing & Flight Bookings">Airline Ticketing & Flight Bookings</option>
-                      <option value="Dubai / Europe Holiday Package">Dubai / Europe Holiday Package</option>
-                      <option value="Travel Insurance & Forex Cards">Travel Insurance & Forex Cards</option>
-                      <option value="Other Advisory">Other Advisory</option>
+                      <option value="Visa Advisory">Visa Advisory (Study, Work, PR, Tourist)</option>
+                      <option value="Passport Assistance">Passport Seva & Tatkal Appointment</option>
+                      <option value="Air Ticketing">Air Ticketing & Extra Baggage Deals</option>
+                      <option value="Holiday Packages">Holiday & International Tour Packages</option>
+                      <option value="Refusal Case Overturn">Prior Visa Rejection Overturn</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
-                    Your Specific Query / Message *
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Describe Your Requirement *
                   </label>
                   <textarea
                     rows={4}
                     required
-                    placeholder="Provide details such as intended destination, preferred intake date, or passport renewal queries..."
+                    placeholder="Specify target countries, academic qualification, IELTS bands, or specific travel dates..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-[#06110d] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
                   />
                 </div>
 
-                <div className="pt-2 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Privacy protected • Zero spam guarantee</span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="py-3 px-6 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs sm:text-sm font-bold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-emerald-950/80 cursor-pointer"
-                  >
-                    <span>Send Inquiry</span>
-                    <Send className="w-3.5 h-3.5 text-white" />
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-500/25 cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Transmit Query to AIMS Desk</span>
+                </button>
               </form>
             )}
+
           </div>
 
         </div>

@@ -1,259 +1,483 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
-  Phone, 
-  Mail, 
-  Clock, 
   Menu, 
   X, 
-  ShieldCheck, 
+  ChevronDown, 
+  Phone, 
+  MapPin, 
+  Globe2, 
+  Search, 
+  FileText, 
   Compass, 
-  CalendarCheck, 
+  Scale, 
   MessageCircle,
-  MapPin
+  GraduationCap,
+  Plane,
+  Briefcase,
+  Languages
 } from 'lucide-react';
-import { COMPANY_DETAILS } from '../data/aimsData';
 import { AimsLogo } from './AimsLogo';
-import { 
-  getWhatsAppRoutingDetails, 
-  getWhatsAppDeliveryUrl, 
-  WhatsAppRoutingInfo 
-} from '../utils/whatsappRouting';
+import { Language } from '../types';
+import { TRANSLATIONS } from '../utils/translations';
+import { getWhatsAppRoutingDetails, getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
 
 interface NavbarProps {
-  onOpenBooking: (prefill?: { visaType?: string; destination?: string }) => void;
+  onOpenBooking: () => void;
   onOpenEligibility: () => void;
+  onOpenTracker?: () => void;
+  onOpenComparison?: () => void;
+  currentLanguage: Language;
+  onLanguageChange: (lang: Language) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenEligibility }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenBooking,
+  onOpenEligibility,
+  onOpenTracker,
+  onOpenComparison,
+  currentLanguage,
+  onLanguageChange,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [routing, setRouting] = useState<WhatsAppRoutingInfo>(getWhatsAppRoutingDetails());
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [visaDropdownOpen, setVisaDropdownOpen] = useState(false);
+  const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    setRouting(getWhatsAppRoutingDetails());
-    const interval = setInterval(() => {
-      setRouting(getWhatsAppRoutingDetails());
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  const t = TRANSLATIONS[currentLanguage];
+  const routing = getWhatsAppRoutingDetails();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+  const handleNavClick = (sectionId: string) => {
+    setMobileMenuOpen(false);
+    setServicesDropdownOpen(false);
+    setVisaDropdownOpen(false);
+    setResourcesDropdownOpen(false);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-      const sections = ['home', 'about', 'services', 'eligibility', 'process', 'destinations', 'booking', 'testimonials', 'faq', 'contact'];
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 140 && rect.bottom >= 140) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Process', href: '#process' },
-    { label: 'Destinations', href: '#destinations' },
-    { label: 'Reviews', href: '#testimonials' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contact', href: '#contact' },
+  const languagesList: { code: Language; label: string; native: string }[] = [
+    { code: 'en', label: 'English', native: 'English' },
+    { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
   ];
 
   return (
-    <>
-      {/* Top Notification & Contact Bar */}
-      <div className="bg-[#030806] text-slate-300 text-xs font-medium border-b border-emerald-950/80 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-4 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-emerald-300 font-medium">
-              <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Court Road, Hoshiarpur (Punjab)</span>
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80">
+      {/* Top Micro Utility Bar */}
+      <div className="bg-slate-900 text-slate-300 text-xs border-b border-slate-800 hidden sm:block">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between">
+          <div className="flex items-center gap-4 text-[11px]">
+            <span className="inline-flex items-center gap-1.5 text-slate-300">
+              <MapPin className="w-3.5 h-3.5 text-blue-400" />
+              <span>Court Road, Opposite District Courts, Hoshiarpur, Punjab</span>
             </span>
-            <span className="hidden md:inline-block text-emerald-950">|</span>
-            <span className="hidden md:inline-flex items-center gap-1.5 text-slate-300">
-              <Clock className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{COMPANY_DETAILS.workingHours} ({COMPANY_DETAILS.closedDays})</span>
-            </span>
-            <span className="hidden lg:inline-block text-emerald-950">|</span>
-            <span className="hidden lg:inline-flex items-center gap-1 text-slate-400">
-              📍 {COMPANY_DETAILS.address}
+            <span className="text-slate-700">|</span>
+            <span className="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>{routing.isOfficeHours ? 'Office Open (9 AM - 6 PM)' : 'After Hours Service Desk'}</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <a 
-              href={`tel:${routing.isOpen ? COMPANY_DETAILS.phoneRaw : COMPANY_DETAILS.afterHoursPhoneRaw}`}
-              id="top-bar-phone"
-              title={`Call ${routing.deskLabel} (${routing.formattedNumber})`}
-              className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors"
-            >
-              <Phone className="w-3 h-3 text-emerald-400" />
-              <span>{routing.isOpen ? COMPANY_DETAILS.phone : COMPANY_DETAILS.afterHoursPhone}</span>
-            </a>
-            <a 
-              href={getWhatsAppDeliveryUrl(
-                `Hello AIMS Consultancy,\n\nI am contacting you from your website.\n\n━━━━━━━━━━━━━━━━━━━━\n📍 *Office Routing Status:*\n• Active Line: ${routing.formattedNumber} (${routing.deskLabel})\n• ${routing.statusDetail}`
-              )}
-              target="_blank" 
+          <div className="flex items-center gap-4 text-[11px]">
+            {/* WhatsApp Routed Line */}
+            <a
+              href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to consult with an expert.')}
+              target="_blank"
               rel="noopener noreferrer"
-              id="top-bar-whatsapp"
-              title={`WhatsApp ${routing.deskLabel} (${routing.formattedNumber})`}
-              className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">
-                WhatsApp ({routing.isOpen ? 'Office: 91933' : 'Duty: 95927'})
-              </span>
-              <span className="sm:hidden">WhatsApp</span>
+              <span>WhatsApp: {routing.formattedNumber}</span>
             </a>
+
+            {/* Language Switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                className="inline-flex items-center gap-1 text-slate-300 hover:text-white font-medium cursor-pointer"
+              >
+                <Languages className="w-3 h-3 text-blue-400" />
+                <span className="uppercase font-bold">{currentLanguage}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              {langDropdownOpen && (
+                <div className="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-xl border border-slate-200 py-1 z-50 text-slate-800">
+                  {languagesList.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        onLanguageChange(lang.code);
+                        setLangDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-blue-50 flex items-center justify-between cursor-pointer ${
+                        currentLanguage === lang.code ? 'font-bold text-blue-600 bg-blue-50/50' : 'text-slate-700'
+                      }`}
+                    >
+                      <span>{lang.native}</span>
+                      <span className="text-[10px] text-slate-400 uppercase">{lang.code}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Sticky Header */}
-      <header className={`sticky top-[37px] z-40 transition-all duration-200 border-b ${
-        isScrolled 
-          ? 'bg-[#060f0c]/95 backdrop-blur-xl border-emerald-950/80 shadow-2xl py-3' 
-          : 'bg-[#060f0c]/80 backdrop-blur-lg border-emerald-950/40 py-4 shadow-sm'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand Logo */}
-          <a href="#home" id="navbar-brand-logo" className="flex items-center group">
-            <AimsLogo variant="horizontal" theme="dark" showTagline={true} className="h-10 sm:h-11" />
+      {/* Main Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-18 sm:h-20">
+          
+          {/* Logo matching image.png */}
+          <a 
+            href="#home" 
+            onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            <AimsLogo variant="horizontal" theme="blue" showTagline={true} />
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                id={`nav-link-${link.label.toLowerCase()}`}
-                className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                  activeSection === link.href.substring(1)
-                    ? 'text-emerald-300 bg-emerald-950/70 border border-emerald-700/50 font-semibold shadow-inner'
-                    : 'text-slate-300 hover:text-white hover:bg-emerald-950/40'
-                }`}
+          {/* Desktop Nav Items */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-700">
+            
+            <button
+              onClick={() => handleNavClick('home')}
+              className="px-3 py-2 text-blue-600 hover:text-blue-700 font-semibold cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
+            >
+              {t.navHome}
+            </button>
+
+            {/* Our Services Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setServicesDropdownOpen(true)}
+              onMouseLeave={() => setServicesDropdownOpen(false)}
+            >
+              <button
+                onClick={() => handleNavClick('services')}
+                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
               >
-                {link.label}
-              </a>
-            ))}
+                <span>{t.navServices}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+
+              {servicesDropdownOpen && (
+                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
+                  <button
+                    onClick={() => handleNavClick('services')}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <GraduationCap className="w-4 h-4 text-blue-500" />
+                    <div>
+                      <div className="font-semibold">Student Study Permits</div>
+                      <p className="text-[10px] text-slate-400">Canada SDS, UK, Australia, Europe</p>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('services')}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <Plane className="w-4 h-4 text-emerald-500" />
+                    <div>
+                      <div className="font-semibold">Tourist & Visitor Visas</div>
+                      <p className="text-[10px] text-slate-400">Dubai, Schengen, UK, USA 10-Yr</p>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('services')}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <Briefcase className="w-4 h-4 text-amber-500" />
+                    <div>
+                      <div className="font-semibold">Passport Seva & Tatkal</div>
+                      <p className="text-[10px] text-slate-400">Fast-track re-issue & lost booklet</p>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('services')}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer border-t border-slate-100"
+                  >
+                    <FileText className="w-4 h-4 text-teal-500" />
+                    <div>
+                      <div className="font-semibold">Refusal Overturning / CAIPS</div>
+                      <p className="text-[10px] text-slate-400">Legal case restructuring</p>
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Visa Options Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setVisaDropdownOpen(true)}
+              onMouseLeave={() => setVisaDropdownOpen(false)}
+            >
+              <button
+                onClick={() => handleNavClick('destinations')}
+                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
+              >
+                <span>{t.navVisaOptions}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+
+              {visaDropdownOpen && (
+                <div className="absolute top-full left-0 w-60 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇨🇦</span>
+                    <span className="font-medium">Canada Visas (Study / PR / Visitor)</span>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇬🇧</span>
+                    <span className="font-medium">United Kingdom (Student / Tourist)</span>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇦🇺</span>
+                    <span className="font-medium">Australia (Subclass 500 / 600)</span>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇺🇸</span>
+                    <span className="font-medium">USA (F-1 Student / B1-B2)</span>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇪🇺</span>
+                    <span className="font-medium">Schengen Europe (29 Nations)</span>
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('destinations')}
+                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <span>🇦🇪</span>
+                    <span className="font-medium">Dubai & UAE (30/60 Days e-Visa)</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => handleNavClick('about')}
+              className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
+            >
+              {t.navAboutUs}
+            </button>
+
+            {/* Resources / Hub Tools Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setResourcesDropdownOpen(true)}
+              onMouseLeave={() => setResourcesDropdownOpen(false)}
+            >
+              <button
+                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
+              >
+                <span>{t.navResources}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+
+              {resourcesDropdownOpen && (
+                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
+                  <button
+                    onClick={() => {
+                      setResourcesDropdownOpen(false);
+                      if (onOpenTracker) onOpenTracker();
+                      else handleNavClick('tracker');
+                    }}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <Search className="w-4 h-4 text-blue-500" />
+                    <div>
+                      <div className="font-semibold text-slate-800">Live Application Tracker</div>
+                      <p className="text-[10px] text-slate-400">Track dossier, biometrics & status</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setResourcesDropdownOpen(false);
+                      if (onOpenComparison) onOpenComparison();
+                      else handleNavClick('comparison');
+                    }}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    <Scale className="w-4 h-4 text-emerald-500" />
+                    <div>
+                      <div className="font-semibold text-slate-800">Side-by-Side Country Compare</div>
+                      <p className="text-[10px] text-slate-400">Compare fees, funds & PR rights</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setResourcesDropdownOpen(false);
+                      handleNavClick('faq');
+                    }}
+                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer border-t border-slate-100"
+                  >
+                    <FileText className="w-4 h-4 text-amber-500" />
+                    <div>
+                      <div className="font-semibold text-slate-800">Visa FAQs & Knowledge Base</div>
+                      <p className="text-[10px] text-slate-400">Direct consular answers</p>
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => handleNavClick('contact')}
+              className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
+            >
+              {t.navContact}
+            </button>
           </nav>
 
-          {/* Header Action Buttons */}
+          {/* Right Action: "Get a Free Assessment" Button as shown in image.png */}
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={onOpenEligibility}
-              id="header-eligibility-btn"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-emerald-100 bg-emerald-950/60 hover:bg-emerald-900/60 rounded-xl transition-all border border-emerald-800/60 hover:border-emerald-700 cursor-pointer"
+              className="px-5 py-2.5 bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold text-sm rounded-lg shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all cursor-pointer flex items-center gap-2 group"
             >
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Eligibility Check</span>
+              <span>{t.getFreeAssessment}</span>
             </button>
+          </div>
 
+          {/* Mobile Menu Button */}
+          <div className="flex sm:hidden items-center gap-2">
             <button
-              onClick={() => onOpenBooking()}
-              id="header-booking-cta"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 rounded-xl shadow-lg shadow-emerald-950/60 transition-all cursor-pointer group"
+              onClick={onOpenEligibility}
+              className="px-3 py-1.5 bg-[#1d4ed8] text-white text-xs font-bold rounded-md"
             >
-              <CalendarCheck className="w-4 h-4 text-white" />
-              <span>Book Consultation</span>
-              <span className="bg-emerald-400/20 border border-emerald-300/40 px-1.5 py-0.5 rounded text-[11px] font-extrabold text-emerald-200">
-                Free
-              </span>
+              Free Check
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            id="mobile-menu-toggle"
-            aria-label="Toggle Navigation Menu"
-            className="lg:hidden p-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
+      </div>
 
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-emerald-950/80 bg-[#081511]/98 px-4 pt-3 pb-6 space-y-2 shadow-2xl backdrop-blur-2xl animate-fadeIn">
-            <div className="grid grid-cols-2 gap-2 pb-3 border-b border-emerald-950">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenEligibility();
-                }}
-                className="w-full text-center py-2.5 px-3 text-xs font-semibold text-emerald-100 bg-emerald-950/80 rounded-xl border border-emerald-800/70"
-              >
-                Eligibility Check
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenBooking();
-                }}
-                className="w-full text-center py-2.5 px-3 text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 rounded-xl shadow-xs"
-              >
-                Book Free Slot
-              </button>
-            </div>
-
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${
-                  activeSection === link.href.substring(1)
-                    ? 'text-emerald-300 bg-emerald-950/80 font-semibold border border-emerald-700/50'
-                    : 'text-slate-300 hover:bg-emerald-950/40 hover:text-white'
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-
-            <div className="pt-3 border-t border-emerald-950 flex flex-col gap-2 text-xs text-slate-400">
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <a href={`tel:${routing.isOpen ? COMPANY_DETAILS.phoneRaw : COMPANY_DETAILS.afterHoursPhoneRaw}`} className="font-semibold text-slate-200">
-                  {routing.isOpen ? COMPANY_DETAILS.phone : COMPANY_DETAILS.afterHoursPhone}
-                </a>
-                <span className="text-[10px] text-emerald-400/80">({routing.deskLabel})</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <a 
-                  href={getWhatsAppDeliveryUrl(
-                    `Hello AIMS Consultancy,\n\nI am contacting you from your mobile site.\n\n━━━━━━━━━━━━━━━━━━━━\n📍 *Office Routing Status:*\n• Line: ${routing.formattedNumber} (${routing.deskLabel})\n• ${routing.statusDetail}`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-emerald-400 hover:underline"
+      {/* Mobile Menu Drawer */}
+      {mobileMenuOpen && (
+        <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fadeIn shadow-lg">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span className="text-xs font-semibold text-slate-500">Choose Language:</span>
+            <div className="flex gap-1.5">
+              {languagesList.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => onLanguageChange(lang.code)}
+                  className={`px-2.5 py-1 text-xs rounded font-bold cursor-pointer ${
+                    currentLanguage === lang.code ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+                  }`}
                 >
-                  WhatsApp ({routing.formattedNumber})
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-blue-400" />
-                <span>{COMPANY_DETAILS.email}</span>
-              </div>
+                  {lang.native}
+                </button>
+              ))}
             </div>
           </div>
-        )}
-      </header>
-    </>
+
+          <div className="grid grid-cols-2 gap-2 text-sm font-medium text-slate-800">
+            <button 
+              onClick={() => handleNavClick('home')}
+              className="p-2.5 text-left rounded-lg hover:bg-blue-50 font-semibold text-blue-600"
+            >
+              {t.navHome}
+            </button>
+            <button 
+              onClick={() => handleNavClick('services')}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
+            >
+              {t.navServices}
+            </button>
+            <button 
+              onClick={() => handleNavClick('destinations')}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
+            >
+              {t.navVisaOptions}
+            </button>
+            <button 
+              onClick={() => handleNavClick('about')}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
+            >
+              {t.navAboutUs}
+            </button>
+            <button 
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenTracker) onOpenTracker();
+                else handleNavClick('tracker');
+              }}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100 flex items-center gap-1.5"
+            >
+              <Search className="w-3.5 h-3.5 text-blue-600" />
+              <span>{t.navTracker}</span>
+            </button>
+            <button 
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenComparison) onOpenComparison();
+                else handleNavClick('comparison');
+              }}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100 flex items-center gap-1.5"
+            >
+              <Scale className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{t.navComparison}</span>
+            </button>
+            <button 
+              onClick={() => handleNavClick('contact')}
+              className="p-2.5 text-left rounded-lg hover:bg-slate-100 col-span-2"
+            >
+              {t.navContact}
+            </button>
+          </div>
+
+          <div className="pt-2 border-t border-slate-100 space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenEligibility();
+              }}
+              className="w-full py-2.5 bg-blue-600 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 shadow-sm"
+            >
+              <span>{t.getFreeAssessment}</span>
+            </button>
+
+            <a
+              href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to consult with an expert.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2 bg-emerald-50 text-emerald-800 font-semibold rounded-lg text-xs flex items-center justify-center gap-2 border border-emerald-200"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+              <span>WhatsApp Official Desk</span>
+            </a>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };

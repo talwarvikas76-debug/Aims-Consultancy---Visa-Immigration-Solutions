@@ -30,109 +30,104 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-20 bg-[#060f0c] border-b border-emerald-950/80 text-slate-200">
+    <section id="faq" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200 text-slate-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/50 text-emerald-300 text-xs font-bold tracking-wide uppercase">
-            <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
+            <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
             <span>Got Questions?</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
             Frequently Asked Questions
           </h2>
-          <p className="text-emerald-100/70 text-base">
+          <p className="text-slate-600 text-base">
             Everything you need to know regarding consular timelines, passport documents, and free consultation booking.
           </p>
 
           {/* Search Bar */}
           <div className="pt-2 relative max-w-md mx-auto">
-            <Search className="w-4 h-4 text-emerald-400/70 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search questions (e.g., consultation, documents, mock interview)..."
+              placeholder="Search frequently asked questions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[#091712] border border-emerald-900/80 rounded-xl text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner"
+              className="w-full pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
             />
           </div>
-        </div>
 
-        {/* Category Pills */}
-        {!searchQuery && (
-          <div className="mt-8 flex items-center justify-center flex-wrap gap-2">
+          {/* Category Tabs */}
+          <div className="pt-2 flex items-center justify-center flex-wrap gap-1.5">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/80'
-                    : 'bg-[#091712] text-slate-300 hover:text-white hover:bg-[#0d221a] border border-emerald-900/60'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
                 }`}
               >
                 {cat.label}
               </button>
             ))}
           </div>
-        )}
+        </div>
 
-        {/* FAQ Accordion List - Information hidden beneath links */}
-        <div className="mt-8 space-y-3">
-          {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq) => {
-              const isOpen = openId === faq.id;
-              return (
-                <div
-                  key={faq.id}
-                  className="bg-[#091712]/90 rounded-2xl border border-emerald-950/90 overflow-hidden transition-all shadow-xl backdrop-blur-sm"
+        {/* Accordion List */}
+        <div className="mt-10 space-y-3">
+          {filteredFaqs.map((faq) => {
+            const isOpen = openId === faq.id;
+
+            return (
+              <div
+                key={faq.id}
+                className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden transition-colors"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleItem(faq.id)}
+                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-hidden hover:bg-slate-50/60"
                 >
-                  <button
-                    onClick={() => toggleItem(faq.id)}
-                    className="w-full text-left p-5 flex items-center justify-between gap-4 cursor-pointer hover:bg-emerald-950/40 transition-colors"
-                  >
-                    <span className="text-sm sm:text-base font-bold text-white font-display">
-                      {faq.question}
-                    </span>
-                    <span className="w-7 h-7 rounded-full bg-[#07130e] flex items-center justify-center shrink-0 text-emerald-300 border border-emerald-900/60">
-                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </span>
-                  </button>
+                  <span className="font-bold text-sm sm:text-base text-slate-900">
+                    {faq.question}
+                  </span>
+                  <span className="p-1 rounded-lg bg-blue-50 text-blue-600 shrink-0">
+                    {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </span>
+                </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-emerald-950 animate-fadeIn">
-                      <p>{faq.answer}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-center py-10 bg-[#091712] rounded-2xl border border-emerald-950 text-slate-400 text-xs">
-              No matching questions found for "{searchQuery}". You can ask us directly via WhatsApp!
+                {isOpen && (
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                    <p>{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {filteredFaqs.length === 0 && (
+            <div className="text-center py-8 text-slate-400 text-xs">
+              No matching questions found for "{searchQuery}".
             </div>
           )}
         </div>
 
-        {/* Need more help bar */}
-        <div className="mt-10 p-5 rounded-2xl bg-gradient-to-r from-[#091b15] via-[#081712] to-[#07130e] border border-emerald-800/40 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
-          <div>
-            <h4 className="text-sm font-bold text-white font-display">
-              Have a specific question not addressed above?
-            </h4>
-            <p className="text-xs text-emerald-100/70 mt-0.5">
-              Our travel specialists respond to direct messages during and after office working hours.
-            </p>
-          </div>
+        {/* WhatsApp Help Prompt */}
+        <div className="mt-10 text-center">
+          <p className="text-xs text-slate-500">
+            Have a case-specific question not listed here?
+          </p>
           <a
-            href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I have a specific question regarding your visa & travel services.')}
+            href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I have a specific question regarding my visa / passport application.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-emerald-950/80"
+            className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4" />
-            <span>Chat on WhatsApp</span>
+            <MessageCircle className="w-4 h-4 text-emerald-600" />
+            <span>Ask our senior advisor on WhatsApp</span>
           </a>
         </div>
 

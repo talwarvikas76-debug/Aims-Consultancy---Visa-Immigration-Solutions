@@ -33,105 +33,90 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section id="testimonials" className="py-16 sm:py-20 bg-[#060f0c] border-b border-emerald-950/80 text-slate-200">
+    <section id="testimonials" className="py-16 sm:py-20 bg-white border-b border-slate-200 text-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/50 text-emerald-300 text-xs font-bold tracking-wide uppercase">
-            <Quote className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
+            <Quote className="w-3.5 h-3.5 text-blue-600" />
             <span>Client Endorsements</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
             What Our Successful Clients Say
           </h2>
-          <p className="text-emerald-100/70 text-base">
+          <p className="text-slate-600 text-base">
             Read real experiences from students, vacationers, and families across Hoshiarpur and Punjab who achieved their global travel and study goals with AIMS Consultancy.
           </p>
-          <div className="flex items-center justify-center gap-2 pt-1 text-xs font-bold text-slate-300">
-            <div className="flex text-amber-400">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400" />
-              ))}
-            </div>
-            <span>4.9 / 5.0 Rated Across 500+ Verified Client Reviews</span>
-          </div>
         </div>
 
-        {/* Testimonials Cards Grid */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Testimonials Grid */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
           {TESTIMONIALS_DATA.map((t) => {
             const isExpanded = expandedCaseId === t.id;
-            const study = caseStudies[t.id];
+            const extraCase = caseStudies[t.id];
 
             return (
               <div
                 key={t.id}
-                className="bg-[#091712]/90 rounded-2xl border border-emerald-950/90 hover:border-emerald-700/60 p-6 sm:p-7 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between backdrop-blur-sm"
+                className="bg-slate-50 rounded-2xl p-6 sm:p-7 border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all flex flex-col justify-between"
               >
                 <div>
-                  {/* Star rating & verified badge */}
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <div className="flex text-amber-400">
+                  {/* Rating Stars & Verified Tag */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-1">
                       {[...Array(t.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-700/50">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                      <span>Verified Client</span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span>{t.visaType}</span>
                     </span>
                   </div>
 
-                  {/* Quote text */}
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
+                  {/* Comment */}
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
                     "{t.quote}"
                   </p>
 
-                  {/* Progressive Disclosure Link: Case Study Breakdown */}
-                  {study && (
-                    <div className="mt-4 pt-3 border-t border-emerald-950">
-                      <button
-                        onClick={() => toggleCase(t.id)}
-                        className="text-[11px] text-emerald-300 hover:text-emerald-200 font-semibold flex items-center gap-1 cursor-pointer transition-colors"
-                      >
-                        <FileText className="w-3 h-3 text-emerald-400" />
-                        <span>✦ {isExpanded ? 'Hide Case Study Breakdown' : 'Read Case Study & Challenges Resolved'}</span>
-                        {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                      </button>
+                  {/* Expandable Case Study Deep Dive */}
+                  {isExpanded && extraCase && (
+                    <div className="mt-4 pt-4 border-t border-slate-200 space-y-2.5 animate-fadeIn text-xs">
+                      <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
+                        <strong className="text-slate-900 block font-bold text-[11px]">The Hurdle:</strong>
+                        <p className="text-slate-600 text-[11px]">{extraCase.challenge}</p>
+                      </div>
 
-                      {isExpanded && (
-                        <div className="mt-2.5 p-3 rounded-xl bg-[#06110d] border border-emerald-800/40 text-[11px] text-slate-300 space-y-1.5 animate-fadeIn">
-                          <div>
-                            <span className="font-semibold text-rose-300">Profile Hurdle: </span>
-                            <span>{study.challenge}</span>
-                          </div>
-                          <div>
-                            <span className="font-semibold text-emerald-300">AIMS Strategy: </span>
-                            <span>{study.solution}</span>
-                          </div>
-                          <div className="pt-1 text-[10px] text-emerald-400 font-medium">
-                            ✓ {study.timeline}
-                          </div>
-                        </div>
-                      )}
+                      <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 space-y-1 text-blue-900">
+                        <strong className="block font-bold text-[11px]">AIMS Legal Strategy:</strong>
+                        <p className="text-[11px]">{extraCase.solution}</p>
+                      </div>
+
+                      <div className="text-[11px] font-semibold text-emerald-700">
+                        ✓ {extraCase.timeline}
+                      </div>
                     </div>
                   )}
                 </div>
 
-                {/* Author Footer */}
-                <div className="mt-6 pt-4 border-t border-emerald-950/80 flex items-center justify-between">
+                {/* Footer Info */}
+                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-bold text-white font-display">
-                      {t.name}
-                    </h4>
-                    <p className="text-[11px] text-slate-400 font-medium">
-                      {t.location} • <span className="text-emerald-300 font-semibold">{t.visaType}</span>
-                    </p>
+                    <h4 className="font-bold text-sm text-slate-900">{t.name}</h4>
+                    <span className="text-xs text-slate-500">{t.location}</span>
                   </div>
-                  <div className="text-[10px] text-emerald-400/80 font-medium">
-                    {t.date}
-                  </div>
+
+                  {extraCase && (
+                    <button
+                      type="button"
+                      onClick={() => toggleCase(t.id)}
+                      className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>{isExpanded ? 'Less' : 'Case Breakdown'}</span>
+                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
                 </div>
               </div>
             );

@@ -1,5 +1,7 @@
 export type ServiceCategory = 'visa' | 'passport' | 'ticketing' | 'holiday' | 'additional';
 
+export type Language = 'en' | 'pa' | 'hi';
+
 export interface ServiceItem {
   id: string;
   title: string;
@@ -35,6 +37,57 @@ export interface Destination {
     workRights?: string;
     pathwayNotes?: string;
   };
+}
+
+export interface ComparisonCountry {
+  id: string;
+  name: string;
+  flag: string;
+  region: string;
+  processingTime: string;
+  postStudyWork: string;
+  averageTuition: string;
+  minLivingFunds: string;
+  prPathway: string;
+  spouseWorkRights: string;
+  workHoursPerWeek: string;
+  keyIntakes: string;
+  ieltsRequirement: string;
+  visaSuccessRate: string;
+  highlights: string[];
+}
+
+export interface ApplicationMilestone {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  status: 'completed' | 'in_progress' | 'upcoming';
+  stageNumber: number;
+}
+
+export interface ApplicationDocument {
+  id: string;
+  name: string;
+  category: string;
+  status: 'verified' | 'under_review' | 'action_required' | 'not_uploaded';
+  updatedAt: string;
+  fileSize?: string;
+}
+
+export interface ApplicationTrackRecord {
+  refId: string;
+  applicantName: string;
+  destination: string;
+  flag: string;
+  visaType: string;
+  submissionDate: string;
+  expectedDecision: string;
+  currentStage: string;
+  stageProgress: number; // 0 to 100
+  officerRemarks: string;
+  milestones: ApplicationMilestone[];
+  documents: ApplicationDocument[];
 }
 
 export interface BookingFormData {
