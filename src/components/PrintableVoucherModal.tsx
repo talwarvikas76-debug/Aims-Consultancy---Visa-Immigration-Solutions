@@ -60,7 +60,7 @@ export const PrintableVoucherModal: React.FC<PrintableVoucherModalProps> = ({
             <div>
               <AimsLogo variant="horizontal" theme="light" showTagline={true} className="h-12" />
               <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider mt-1.5">
-                {COMPANY_DETAILS.isoCertification}
+                Official Consultation & Advisory Pass
               </p>
               <p className="text-[11px] text-slate-500">
                 {COMPANY_DETAILS.address} • Email: {COMPANY_DETAILS.email}

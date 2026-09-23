@@ -9,7 +9,7 @@ import {
   Compass, 
   CalendarCheck, 
   MessageCircle,
-  Award
+  MapPin
 } from 'lucide-react';
 import { COMPANY_DETAILS } from '../data/aimsData';
 import { AimsLogo } from './AimsLogo';
@@ -76,9 +76,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenEligibility
       <div className="bg-[#030806] text-slate-300 text-xs font-medium border-b border-emerald-950/80 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
-              <Award className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{COMPANY_DETAILS.isoCertification}</span>
+            <span className="inline-flex items-center gap-1.5 text-emerald-300 font-medium">
+              <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Court Road, Hoshiarpur (Punjab)</span>
             </span>
             <span className="hidden md:inline-block text-emerald-950">|</span>
             <span className="hidden md:inline-flex items-center gap-1.5 text-slate-300">

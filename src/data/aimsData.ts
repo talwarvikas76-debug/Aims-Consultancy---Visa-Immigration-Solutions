@@ -19,7 +19,7 @@ export const COMPANY_DETAILS = {
   closedDays: 'Sunday Closed',
   upiId: 'talwarvikasaxisbank@axl',
   consultationFee: 0,
-  isoCertification: 'ISO 9001:2015 Certified Agency',
+  trustTag: 'Government Registered Overseas Advisory',
   stats: [
     { value: 100, prefix: 'Over ', suffix: '+', label: 'Successful Visas', description: 'Visas processed with verified consular compliance' },
     { value: 10, suffix: '+', label: 'Years of Experience', description: 'Decade of reliable advisory in Punjab' },

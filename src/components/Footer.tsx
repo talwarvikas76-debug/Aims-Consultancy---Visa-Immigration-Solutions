@@ -42,11 +42,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenEligibility
             <p className="text-emerald-100/70 leading-relaxed text-xs">
               Trusted travel and immigration advisory in Hoshiarpur, Punjab. Specializing in high-accuracy student permits, holiday tourist visas, express passport handling, and international flights.
             </p>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#07140f] border border-emerald-900/60 text-emerald-300 font-semibold text-[11px]">
-              <Award className="w-4 h-4 text-emerald-400" />
-              <span>{COMPANY_DETAILS.isoCertification}</span>
-            </div>
           </div>
 
           {/* Quick Links */}

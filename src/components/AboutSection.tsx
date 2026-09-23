@@ -80,7 +80,7 @@ export const AboutSection: React.FC = () => {
                 <span>Court Road Headquarters • Hoshiarpur</span>
               </div>
               <p className="text-[11px] text-slate-300 mt-1">
-                Authorized consultancy with ISO 9001:2015 certified quality systems.
+                Authorized private overseas consultancy providing dedicated travel solutions.
               </p>
             </div>
           </div>
