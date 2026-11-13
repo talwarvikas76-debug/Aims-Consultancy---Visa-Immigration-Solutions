@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { TrustCredentialsStrip } from './components/TrustCredentialsStrip';
 import { WhyChooseAims } from './components/WhyChooseAims';
 import { ApplicationTracker } from './components/ApplicationTracker';
 import { CountryComparisonTool } from './components/CountryComparisonTool';
@@ -18,8 +19,10 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { EligibilityCheckerModal } from './components/EligibilityCheckerModal';
 import { PrintableVoucherModal } from './components/PrintableVoucherModal';
+import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { VirtualAssistantWidget } from './components/VirtualAssistantWidget';
 import { BookingFormData, Language } from './types';
 
@@ -36,8 +39,8 @@ export default function App() {
   const [bookingPrefill, setBookingPrefill] = useState<Partial<BookingFormData> | undefined>();
   const [contactPrefillService, setContactPrefillService] = useState<string | undefined>();
   const [printableBooking, setPrintableBooking] = useState<BookingFormData | null>(null);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
-  // Trigger scroll to booking with optional prefilled parameters
   const handleOpenBooking = (prefill?: { visaType?: string; destination?: string }) => {
     if (prefill) {
       setBookingPrefill((prev) => ({
@@ -51,7 +54,6 @@ export default function App() {
     }
   };
 
-  // Destination click handler -> prefill destination and scroll to booking
   const handleSelectDestination = (destinationName: string) => {
     setBookingPrefill((prev) => ({
       ...prev,
@@ -63,7 +65,6 @@ export default function App() {
     }
   };
 
-  // Service enquiry click handler -> scroll to contact with service pre-selected
   const handleOpenContactWithService = (serviceTitle: string) => {
     setContactPrefillService(serviceTitle);
     const contactEl = document.getElementById('contact');
@@ -72,7 +73,6 @@ export default function App() {
     }
   };
 
-  // Handoff from Eligibility Modal directly into booking
   const handleProceedFromEligibility = (prefill: {
     visaType: string;
     destination: string;
@@ -91,7 +91,6 @@ export default function App() {
     }
   };
 
-  // Handoff from Hero Card directly into Eligibility Checker Modal
   const handleOpenEligibilityWithPrefill = (prefill: {
     destination: string;
     visaType: string;
@@ -113,10 +112,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
-      
-      {/* Navigation matching image.png */}
-      <Navbar 
+    <div className="min-h-screen flex flex-col bg-[#F8F9FA] text-[#334155] font-sans selection:bg-[#C29B38]/30 selection:text-[#0F172A] relative overflow-x-hidden">
+      <Navbar
         onOpenBooking={() => handleOpenBooking()}
         onOpenEligibility={() => setIsEligibilityOpen(true)}
         onOpenTracker={handleOpenTracker}
@@ -125,10 +122,8 @@ export default function App() {
         onLanguageChange={(lang) => setCurrentLanguage(lang)}
       />
 
-      {/* Main Content Sections */}
       <main className="flex-1">
-        {/* Dynamic Hero with Check Your Eligibility Engine matching image.png */}
-        <HeroSection 
+        <HeroSection
           onOpenBooking={() => handleOpenBooking()}
           onOpenEligibility={() => setIsEligibilityOpen(true)}
           onOpenEligibilityWithPrefill={handleOpenEligibilityWithPrefill}
@@ -136,72 +131,62 @@ export default function App() {
           currentLanguage={currentLanguage}
         />
 
-        {/* Why Choose AIMS Section matching image.png */}
-        <WhyChooseAims 
+        {/* Prominent Trust & Licensing Credentials Section near Top of Page */}
+        <TrustCredentialsStrip />
+
+        <WhyChooseAims
           currentLanguage={currentLanguage}
           onOpenBooking={() => handleOpenBooking()}
           onOpenEligibility={() => setIsEligibilityOpen(true)}
         />
 
-        {/* Client Portal & Live Application Tracker */}
-        <ApplicationTracker />
-
-        {/* Interactive Country & Pathway Comparison Tool */}
-        <CountryComparisonTool 
-          onOpenBooking={handleOpenBooking}
-          onOpenEligibility={() => setIsEligibilityOpen(true)}
-        />
-
-        {/* About Section */}
-        <AboutSection />
-
-        {/* Services Directory */}
-        <ServicesSection 
+        <ServicesSection
           onOpenBooking={handleOpenBooking}
           onOpenContactWithService={handleOpenContactWithService}
         />
 
-        {/* Step-by-Step Consular Process */}
-        <ProcessSection 
-          onOpenBooking={() => handleOpenBooking()}
+        <ApplicationTracker />
+
+        <CountryComparisonTool
+          onOpenBooking={handleOpenBooking}
+          onOpenEligibility={() => setIsEligibilityOpen(true)}
         />
 
-        {/* Country & Destination Explorer */}
-        <DestinationsSection 
-          onSelectDestination={handleSelectDestination}
-        />
+        <AboutSection />
 
-        {/* Booking Console for 100% Free Consultations */}
-        <BookingConsole 
+        <ProcessSection onOpenBooking={() => handleOpenBooking()} />
+
+        <DestinationsSection onSelectDestination={handleSelectDestination} />
+
+        <BookingConsole
           prefillData={bookingPrefill}
           onOpenPrintPass={(data) => setPrintableBooking(data)}
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
         />
 
-        {/* Testimonials */}
         <TestimonialsSection />
 
-        {/* FAQs */}
         <FAQSection />
 
-        {/* Contact Desk */}
-        <ContactSection 
+        <ContactSection
           initialService={contactPrefillService}
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
         />
       </main>
 
-      {/* Footer */}
-      <Footer 
+      <Footer
         onOpenBooking={() => handleOpenBooking()}
         onOpenEligibility={() => setIsEligibilityOpen(true)}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
       />
 
-      {/* Floating Virtual Assistant Widget */}
-      <VirtualAssistantWidget 
-        onOpenBooking={() => handleOpenBooking()}
-      />
+      {/* Mobile Sticky Bottom Bar with Instant Call & WhatsApp Buttons */}
+      <MobileStickyCTA />
 
-      {/* Interactive Eligibility & Requirements Modal (Visa Eligibility Quiz matching image) */}
-      <EligibilityCheckerModal 
+      {/* Fixed Bottom-Right WhatsApp & Quick Contact Widget */}
+      <VirtualAssistantWidget onOpenBooking={() => handleOpenBooking()} />
+
+      <EligibilityCheckerModal
         isOpen={isEligibilityOpen}
         onClose={() => {
           setIsEligibilityOpen(false);
@@ -211,10 +196,14 @@ export default function App() {
         initialPrefill={eligibilityPrefill}
       />
 
-      {/* Printable / Downloadable Appointment Voucher Modal */}
-      <PrintableVoucherModal 
+      <PrintableVoucherModal
         bookingData={printableBooking}
         onClose={() => setPrintableBooking(null)}
+      />
+
+      <PrivacyPolicyModal
+        isOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
       />
     </div>
   );

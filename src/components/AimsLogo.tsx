@@ -15,7 +15,7 @@ export const AimsLogo: React.FC<AimsLogoProps> = ({
 }) => {
   const isDark = theme === 'dark';
   const [emblemError, setEmblemError] = useState(false);
-  const [fullError, setFullError] = useState(false);
+  const [fullStage, setFullStage] = useState<0 | 1 | 2>(0); // 0 = png, 1 = jpg, 2 = vector fallback
 
   // Standalone Emblem (Icon only) - Loads official cutout from Gemini generation
   if (variant === 'emblem') {
@@ -58,12 +58,12 @@ export const AimsLogo: React.FC<AimsLogoProps> = ({
   if (variant === 'full') {
     return (
       <div className={`flex flex-col items-center text-center select-none ${className}`}>
-        {/* Render the authentic high-resolution artwork directly from Gemini */}
-        {!fullError ? (
+        {/* Render the authentic high-resolution artwork directly from Gemini / Upload */}
+        {fullStage < 2 ? (
           <div className="relative group overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm bg-white p-2">
             <img
-              src="/aims-logo-new.png"
-              onError={() => setFullError(true)}
+              src={fullStage === 0 ? '/aims-logo-new.png' : '/IMAGE-NEW.jpg'}
+              onError={() => setFullStage((prev) => (prev === 0 ? 1 : 2))}
               alt="Aims Consultancy Official Logo - Education | Immigration | Travel"
               className="w-56 sm:w-64 md:w-72 h-auto object-contain rounded-xl"
               loading="eager"

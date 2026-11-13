@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { 
-  ArrowRight, 
-  MapPin, 
-  Phone, 
-  MessageCircle, 
-  CheckCircle2, 
-  Sparkles, 
-  ChevronRight, 
-  Plane, 
-  GraduationCap, 
-  Briefcase, 
-  Users,
+import {
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  ChevronRight,
+  Plane,
+  GraduationCap,
+  FileBadge,
   Compass,
-  Globe2
+  ShieldCheck,
+  MessageCircle,
+  Sparkles,
+  Check,
 } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../utils/translations';
-import { getWhatsAppRoutingDetails, getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { COMPANY_DETAILS } from '../data/aimsData';
+import { AIMS_MEDIA } from '../assets/media';
+import { getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
 import { AimsLogo } from './AimsLogo';
 
 interface HeroSectionProps {
@@ -32,22 +33,27 @@ interface HeroSectionProps {
   currentLanguage: Language;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ 
-  onOpenBooking, 
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  onOpenBooking,
   onOpenEligibilityWithPrefill,
   onOpenEligibility,
   onSelectDestination,
   currentLanguage,
 }) => {
   const t = TRANSLATIONS[currentLanguage];
-  const routing = getWhatsAppRoutingDetails();
 
-  // Interactive Hero Form State
+  // 3-Step Interactive Inquiry / Quick Check State
+  const [inquiryStep, setInquiryStep] = useState<1 | 2 | 3>(1);
   const [selectedDestination, setSelectedDestination] = useState('Canada');
-  const [selectedVisaType, setSelectedVisaType] = useState('Student');
-  const [age, setAge] = useState('23');
-  const [experience, setExperience] = useState('Fresh Graduate / Student');
-  const [isAssessing, setIsAssessing] = useState(false);
+  const [selectedServiceType, setSelectedServiceType] = useState('Visa Appointments');
+  const [applicantCategory, setApplicantCategory] = useState('Student');
+  const [timeline, setTimeline] = useState('Within 1 - 3 Months');
+  const [callerName, setCallerName] = useState('');
+  const [callerPhone, setCallerPhone] = useState('');
+  const [callbackSubmitted, setCallbackSubmitted] = useState(false);
+  const [callbackRef, setCallbackRef] = useState('');
+  const [deskImgError, setDeskImgError] = useState(false);
+  const [heroBgError, setHeroBgError] = useState(false);
 
   const destinationOptions = [
     { label: 'Canada', value: 'Canada', flag: '🇨🇦', id: 'canada' },
@@ -58,342 +64,497 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     { label: 'Dubai & UAE', value: 'Dubai', flag: '🇦🇪', id: 'dubai-uae' },
   ];
 
-  const visaTypeOptions = [
-    { label: 'Skilled Worker', value: 'Skilled Worker', icon: Briefcase },
-    { label: 'Student', value: 'Student', icon: GraduationCap },
-    { label: 'PR', value: 'PR', icon: Compass },
-    { label: 'Tourist', value: 'Tourist', icon: Plane },
+  const serviceOptions = [
+    { label: 'Visa Appointments', value: 'Visa Appointments', icon: Compass },
+    { label: 'Global Ticketing', value: 'Global Ticketing', icon: Plane },
+    { label: 'Documentation', value: 'Documentation', icon: FileBadge },
+    { label: 'Tour Packages', value: 'Tour Packages', icon: GraduationCap },
   ];
 
-  const experienceOptions = [
-    'Fresh Graduate / Student',
-    '1 - 2 Years',
-    '3 - 5 Years',
-    '5+ Years',
-    'Not Applicable',
+  const profileOptions = [
+    'Student Permit',
+    'Tourist / Family Visit',
+    'Skilled / PR Pathway',
+    'Tatkal / Urgent Passport',
   ];
 
-  const handleHeroAssess = (e: React.FormEvent) => {
+  const timelineOptions = [
+    'Immediate / Urgent',
+    'Within 1 - 3 Months',
+    '3 - 6 Months Intake',
+    'Planning for Next Year',
+  ];
+
+  const handleQuickCallbackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsAssessing(true);
-    setTimeout(() => {
-      setIsAssessing(false);
-      if (onOpenEligibilityWithPrefill) {
-        onOpenEligibilityWithPrefill({
-          destination: selectedDestination,
-          visaType: selectedVisaType,
-          age,
-          experience,
-        });
-      } else {
-        onOpenEligibility();
-      }
-    }, 350);
+    const refId = `AIMS-QC-${Math.floor(1000 + Math.random() * 9000)}`;
+    setCallbackRef(refId);
+    setCallbackSubmitted(true);
   };
 
-  const handlePillClick = (destVal: string, destId: string) => {
+  const handleLaunchFullAssessment = () => {
+    const mappedVisaType =
+      applicantCategory.includes('Student')
+        ? 'Student'
+        : applicantCategory.includes('Skilled')
+        ? 'PR'
+        : 'Tourist';
+
+    if (onOpenEligibilityWithPrefill) {
+      onOpenEligibilityWithPrefill({
+        destination: selectedDestination,
+        visaType: mappedVisaType,
+        age: '24',
+        experience: timeline,
+      });
+    } else {
+      onOpenEligibility();
+    }
+  };
+
+  const handleQuickDestSelect = (destVal: string, destId: string) => {
     setSelectedDestination(destVal);
     onSelectDestination(destId);
   };
 
   return (
-    <section id="home" className="relative bg-gradient-to-b from-slate-50 via-white to-blue-50/30 overflow-hidden pt-8 pb-16 lg:pt-14 lg:pb-24">
-      {/* Stylized Vector World Map Background Watermark matching image.png */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.06] select-none flex items-center justify-center">
-        <svg viewBox="0 0 1000 500" className="w-full h-full object-cover">
-          <path
-            d="M150,120 Q160,110 190,115 T240,140 T270,180 T290,240 T260,300 T210,340 T170,300 T140,240 T120,180 Z 
-               M450,100 Q480,80 540,90 T620,110 T680,160 T720,130 T800,120 T860,160 T900,220 T850,280 T800,320 T740,300 T680,340 T620,380 T560,360 T520,300 T480,240 T440,180 Z
-               M750,380 Q800,360 840,380 T880,440 T840,480 T780,460 T740,410 Z"
-            fill="#1e40af"
+    <section
+      id="home"
+      className="relative bg-[#0F172A] text-white overflow-hidden pt-10 pb-14 lg:pt-16 lg:pb-20"
+    >
+      {/* Full-bleed Subtly Desaturated Cinematic Background with Soft Navy Gradient Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        {!heroBgError && (
+          <img
+            src={AIMS_MEDIA.heroGlobalHorizon}
+            alt="Global architectural horizon symbolizing international travel and immigration pathways"
+            onError={() => setHeroBgError(true)}
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover object-center grayscale-[35%] opacity-45"
           />
-        </svg>
-      </div>
-
-      {/* Modern Curved Royal-Blue Background Accent behind Right Card (exact image element) */}
-      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-none overflow-hidden hidden lg:block">
-        <div className="absolute top-12 -right-24 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/90 to-blue-800 rounded-[80px] rotate-12 -z-0 opacity-95 shadow-2xl" />
-        <div className="absolute top-24 -right-12 w-[520px] h-[520px] bg-sky-400/20 rounded-[70px] rotate-6 -z-0 blur-2xl" />
+        )}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(105deg, rgba(15, 23, 42, 0.94) 0%, rgba(15, 23, 42, 0.84) 55%, rgba(30, 41, 59, 0.78) 100%)',
+          }}
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-          
-          {/* Left Column: Hero Content & Cheerful Travelers (Matching image.png) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Left Column: Crisp Editorial Messaging & Trust Credentials */}
           <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
-            
-            {/* Top Quiet Badge with Official 3D Logo Emblem */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-red-200/90 text-slate-800 text-xs font-semibold shadow-xs">
-              <AimsLogo variant="emblem" className="w-5 h-5" />
-              <span className="font-bold text-slate-900">Aims Consultancy</span>
-              <span className="text-red-300">•</span>
-              <span className="text-slate-600 font-medium">Court Road, Hoshiarpur</span>
+            {/* Official License & Office Identifier (Clean editorial typography, no pill clutter) */}
+            <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs font-semibold tracking-wide text-[#DFB958]">
+              <ShieldCheck className="w-4 h-4 shrink-0" />
+              <span className="uppercase tracking-[0.12em]">
+                Punjab Govt. Licence No: {COMPANY_DETAILS.licenceNo}
+              </span>
+              <span className="text-slate-500 hidden sm:inline">•</span>
+              <span className="text-slate-300 font-normal hidden sm:inline">
+                Hoshiarpur Head Office
+              </span>
             </div>
 
-            {/* Main Headline from image.png */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-black text-slate-900 tracking-tight leading-[1.14] font-display">
+            {/* Display Headline */}
+            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-[#F8F9FA] tracking-tight leading-[1.12] font-display">
               {t.heroHeadlinePrefix}
-              <span className="text-blue-600 block sm:inline">
+              <span className="text-[#DFB958] block sm:inline">
                 {t.heroHeadlineHighlight}
               </span>
             </h1>
 
-            {/* Subtitle from image.png */}
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              {t.heroSubtitle}
+            {/* Subtitle with generous reading rhythm */}
+            <p className="text-base sm:text-[17px] text-slate-200 max-w-xl mx-auto lg:mx-0 font-normal leading-[1.65]">
+              {t.heroSubtitle} Backed by transparent documentation, zero hidden charges, and dedicated personal case management from our Fatehgarh Chowk desk.
             </p>
 
-            {/* Primary Action Buttons from image.png */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+            {/* Primary & Secondary CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-1">
               <button
                 onClick={onOpenEligibility}
-                className="w-full sm:w-auto px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md shadow-blue-500/25 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+                className="w-full sm:w-auto px-7 py-3.5 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer text-sm group"
               >
                 <span>{t.btnStartAssessment}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <button
                 onClick={onOpenBooking}
-                className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-700 font-semibold rounded-lg border border-slate-300 shadow-xs hover:border-slate-400 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+                className="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/15 text-[#F8F9FA] font-semibold rounded-xl border border-white/25 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm backdrop-blur-xs"
               >
-                <Phone className="w-4 h-4 text-blue-600" />
+                <Phone className="w-4 h-4 text-[#DFB958]" />
                 <span>{t.btnContactExpert}</span>
               </button>
             </div>
 
-            {/* Visual Composition: Cheerful Travelers with Passports + 3D Earth Globe matching bottom-left of image.png */}
-            <div className="pt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              
-              {/* Stylized 3D Globe with Skyline contour */}
-              <div className="relative w-20 h-20 shrink-0">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-700 via-sky-500 to-teal-400 p-0.5 shadow-lg shadow-blue-500/20 flex items-center justify-center animate-spin-slow">
-                  <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-xs flex items-center justify-center text-white">
-                    <Globe2 className="w-12 h-12 text-white/90 drop-shadow-md" />
+            {/* Authentic Hoshiarpur Advisory Desk Verification Strip */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <div className="bg-[#1E293B]/90 backdrop-blur-sm p-3 rounded-xl border border-slate-700/80 flex items-center gap-3.5 max-w-md w-full sm:w-auto">
+                <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-slate-600 bg-slate-800 flex items-center justify-center">
+                  {!deskImgError ? (
+                    <img
+                      src={AIMS_MEDIA.officeAdvisoryDesk}
+                      onError={() => setDeskImgError(true)}
+                      alt="AIMS Consultancy Senior Advisor Desk in Hoshiarpur"
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <AimsLogo variant="emblem" className="w-9 h-9" />
+                  )}
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-1.5 text-[#DFB958] text-xs font-semibold">
+                    <span>★★★★★</span>
+                    <span className="text-slate-200 tabular-nums">4.9/5 Client Trust</span>
                   </div>
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-1 border-2 border-white shadow-sm" title="Active Intake Window">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                </div>
-              </div>
-
-              {/* Happy Travelers Photographic Vignette matching image.png */}
-              <div className="relative bg-white p-2 rounded-2xl shadow-md border border-slate-200/90 flex items-center gap-3 max-w-sm">
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200">
-                  <img
-                    src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=400&q=80"
-                    alt="Two cheerful young travelers holding passports and flight tickets"
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  <span className="absolute bottom-0 inset-x-0 bg-blue-900/80 text-[8px] text-white text-center font-bold uppercase tracking-wider py-0.5">
-                    Visa Approved
-                  </span>
-                </div>
-                <div className="text-left pr-2">
-                  <div className="flex items-center gap-1 text-amber-500 text-xs">
-                    {'★'.repeat(5)}
-                    <span className="text-[11px] font-bold text-slate-800 ml-1">4.9/5</span>
+                  <div className="text-sm font-bold text-white mt-0.5 tabular-nums">
+                    99.2% Consular Accuracy
                   </div>
-                  <h4 className="text-xs font-bold text-slate-900 mt-0.5">5,000+ Success Stories</h4>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    Canada SDS, UK Graduate Route & Australia PR
+                  <p className="text-xs text-slate-300 leading-snug">
+                    Fatehgarh Chowk, Hoshiarpur • Direct Line: 95927-47000
                   </p>
                 </div>
               </div>
-
             </div>
-
           </div>
 
-          {/* Right Column: Interactive "Check Your Eligibility" Card matching image.png */}
+          {/* Right Column: Clean 3-Step Interactive Inquiry / Quick Check Card */}
           <div className="lg:col-span-6 flex flex-col items-center lg:items-end relative z-10">
-            
-            {/* The Main High-Converting Floating White Card */}
-            <div className="w-full max-w-md bg-white rounded-2xl p-6 sm:p-7 shadow-2xl border border-slate-200/90 relative">
-              
-              <div className="mb-5 pb-3 border-b border-slate-100">
+            <div className="w-full max-w-md bg-[#F8F9FA] text-[#334155] rounded-2xl p-6 sm:p-7 shadow-2xl border border-slate-200">
+              {/* Card Header */}
+              <div className="mb-5 pb-3.5 border-b border-slate-200">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <AimsLogo variant="emblem" className="w-7 h-7" />
                     <div>
-                      <span className="text-xs font-black text-[#d90429] tracking-tight font-display block leading-none">
-                        Aims Consultancy
+                      <span className="text-xs font-extrabold text-[#0F172A] tracking-tight font-display block leading-none">
+                        AIMS Quick Inquiry
                       </span>
-                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                        Assessment Desk
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
+                        3-Step Callback & Assessment
                       </span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="text-[11px] font-bold text-[#926B16] uppercase tracking-wider">
                     100% Free
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-display">
-                  {t.cardTitle}
-                </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Instant preliminary points & subclass evaluation in 30 seconds
-                </p>
+                <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A] tracking-tight font-display">
+                  Fast Callback & Eligibility Check
+                </h2>
               </div>
 
-              <form onSubmit={handleHeroAssess} className="space-y-4">
-                
-                {/* Field 1: Where do you want to go? */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    {t.whereToGo}
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={selectedDestination}
-                      onChange={(e) => setSelectedDestination(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 font-semibold focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all cursor-pointer"
-                    >
-                      {destinationOptions.map((dest) => (
-                        <option key={dest.value} value={dest.value}>
-                          {dest.flag} {dest.label}
-                        </option>
-                      ))}
-                    </select>
+              {/* 3-Step Progress Bar */}
+              {!callbackSubmitted && (
+                <div className="mb-5">
+                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 mb-2">
+                    <span className={inquiryStep >= 1 ? 'text-[#0F172A] font-bold' : ''}>
+                      1. Destination
+                    </span>
+                    <span className={inquiryStep >= 2 ? 'text-[#0F172A] font-bold' : ''}>
+                      2. Profile
+                    </span>
+                    <span className={inquiryStep === 3 ? 'text-[#0F172A] font-bold' : ''}>
+                      3. Fast Callback
+                    </span>
                   </div>
-                </div>
-
-                {/* Field 2: Visa Type? */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    {t.visaType}
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                    {visaTypeOptions.map((vt) => {
-                      const Icon = vt.icon;
-                      const isSelected = selectedVisaType === vt.value;
-                      return (
-                        <button
-                          type="button"
-                          key={vt.value}
-                          onClick={() => setSelectedVisaType(vt.value)}
-                          className={`py-2 px-2 rounded-lg text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all cursor-pointer border ${
-                            isSelected
-                              ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                          }`}
-                        >
-                          <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-slate-500'}`} />
-                          <span className="truncate w-full text-center">{vt.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Field 3 & 4: Age and Experience side by side */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                      {t.ageLabel}
-                    </label>
-                    <input
-                      type="number"
-                      min="16"
-                      max="75"
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      placeholder="e.g. 23"
-                      required
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 font-medium focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                  <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[#C29B38] transition-all duration-300"
+                      style={{ width: `${(inquiryStep / 3) * 100}%` }}
                     />
                   </div>
+                </div>
+              )}
 
+              {/* Success Confirmation State */}
+              {callbackSubmitted ? (
+                <div className="py-4 text-center space-y-4 animate-fadeIn">
+                  <div className="w-12 h-12 rounded-xl bg-[#0F172A] text-[#DFB958] flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                      {t.experienceLabel}
-                    </label>
-                    <select
-                      value={experience}
-                      onChange={(e) => setExperience(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-2.5 text-xs text-slate-900 font-medium focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all cursor-pointer"
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#926B16]">
+                      Request Logged • {callbackRef}
+                    </span>
+                    <h3 className="text-lg font-bold text-[#0F172A] mt-1">
+                      Thank You, {callerName || 'Applicant'}
+                    </h3>
+                    <p className="text-xs text-[#334155] leading-relaxed mt-1">
+                      Your inquiry for <strong>{selectedDestination}</strong> ({selectedServiceType}) has been assigned to our Hoshiarpur desk. Expect a call on <strong>{callerPhone}</strong> shortly.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-2">
+                    <a
+                      href={getWhatsAppDeliveryUrl(
+                        `Hello AIMS Consultancy (${callbackRef}),\nName: ${callerName}\nPhone: ${callerPhone}\nDestination: ${selectedDestination}\nService: ${selectedServiceType}\nProfile: ${applicantCategory}\nTimeline: ${timeline}\nPlease call me back for a quick check.`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors"
                     >
-                      {experienceOptions.map((opt) => (
-                        <option key={opt} value={opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Send Directly to WhatsApp (95927-47000)</span>
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCallbackSubmitted(false);
+                        setInquiryStep(1);
+                        setCallerName('');
+                        setCallerPhone('');
+                      }}
+                      className="w-full py-2 text-xs font-semibold text-slate-600 hover:text-[#0F172A] cursor-pointer"
+                    >
+                      Submit Another Inquiry
+                    </button>
                   </div>
                 </div>
-
-                {/* Primary CTA Inside Card */}
-                <button
-                  type="submit"
-                  disabled={isAssessing}
-                  className="w-full py-3 bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold text-sm rounded-lg shadow-md shadow-blue-600/30 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              ) : (
+                <form
+                  onSubmit={
+                    inquiryStep === 3
+                      ? handleQuickCallbackSubmit
+                      : (e) => {
+                          e.preventDefault();
+                          setInquiryStep(inquiryStep === 1 ? 2 : 3);
+                        }
+                  }
+                  className="space-y-4"
                 >
-                  {isAssessing ? (
-                    <span className="inline-flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Evaluating Profile...</span>
-                    </span>
-                  ) : (
-                    <span>{t.btnAssessEligibility}</span>
+                  {/* STEP 1: Destination & Service Selection */}
+                  {inquiryStep === 1 && (
+                    <div className="space-y-4 animate-fadeIn">
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
+                          Intended Destination
+                        </label>
+                        <select
+                          value={selectedDestination}
+                          onChange={(e) => setSelectedDestination(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-[#0F172A] font-semibold focus:outline-hidden focus:ring-2 focus:ring-[#C29B38] transition-all cursor-pointer"
+                        >
+                          {destinationOptions.map((dest) => (
+                            <option key={dest.value} value={dest.value}>
+                              {dest.flag} {dest.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
+                          Required Service
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {serviceOptions.map((svc) => {
+                            const Icon = svc.icon;
+                            const isSelected = selectedServiceType === svc.value;
+                            return (
+                              <button
+                                type="button"
+                                key={svc.value}
+                                onClick={() => setSelectedServiceType(svc.value)}
+                                className={`py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer border text-left ${
+                                  isSelected
+                                    ? 'bg-[#0F172A] text-white border-[#0F172A] shadow-xs'
+                                    : 'bg-white text-[#334155] border-slate-300 hover:border-slate-400'
+                                }`}
+                              >
+                                <Icon
+                                  className={`w-4 h-4 shrink-0 ${
+                                    isSelected ? 'text-[#DFB958]' : 'text-slate-500'
+                                  }`}
+                                />
+                                <span className="truncate">{svc.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full py-3 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer group"
+                      >
+                        <span>Next: Profile & Timeline</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
                   )}
-                </button>
 
-              </form>
+                  {/* STEP 2: Profile & Travel Timeline */}
+                  {inquiryStep === 2 && (
+                    <div className="space-y-4 animate-fadeIn">
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
+                          Applicant Category
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {profileOptions.map((prof) => (
+                            <button
+                              type="button"
+                              key={prof}
+                              onClick={() => setApplicantCategory(prof)}
+                              className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all cursor-pointer text-left flex items-center justify-between ${
+                                applicantCategory === prof
+                                  ? 'bg-[#0F172A] text-white border-[#0F172A]'
+                                  : 'bg-white text-[#334155] border-slate-300 hover:border-slate-400'
+                              }`}
+                            >
+                              <span className="truncate">{prof}</span>
+                              {applicantCategory === prof && (
+                                <Check className="w-3.5 h-3.5 text-[#DFB958] shrink-0" />
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
 
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
+                          Preferred Travel / Filing Timeline
+                        </label>
+                        <select
+                          value={timeline}
+                          onChange={(e) => setTimeline(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-[#0F172A] font-medium focus:outline-hidden focus:ring-2 focus:ring-[#C29B38] cursor-pointer"
+                        >
+                          {timelineOptions.map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => setInquiryStep(1)}
+                          className="py-3 px-4 bg-white border border-slate-300 hover:bg-slate-100 text-[#334155] font-semibold text-xs rounded-xl transition-colors cursor-pointer"
+                        >
+                          Back
+                        </button>
+                        <button
+                          type="submit"
+                          className="flex-1 py-3 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <span>Next: Request Callback</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STEP 3: Callback Contact */}
+                  {inquiryStep === 3 && (
+                    <div className="space-y-3.5 animate-fadeIn">
+                      <div className="p-3 rounded-lg bg-[#0F172A] text-white text-xs flex items-center justify-between">
+                        <div>
+                          <span className="text-[#DFB958] font-semibold block text-[10px] uppercase tracking-wider">
+                            Selected Scope
+                          </span>
+                          <span className="font-bold">
+                            {selectedDestination} • {selectedServiceType}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setInquiryStep(1)}
+                          className="text-[11px] text-slate-300 hover:text-white underline cursor-pointer"
+                        >
+                          Edit
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1">
+                          Your Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={callerName}
+                          onChange={(e) => setCallerName(e.target.value)}
+                          placeholder="e.g. Harpreet Singh"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-[#0F172A] focus:outline-hidden focus:ring-2 focus:ring-[#C29B38]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#0F172A] mb-1">
+                          Phone / WhatsApp Number *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={callerPhone}
+                          onChange={(e) => setCallerPhone(e.target.value)}
+                          placeholder="e.g. +91 95927 47000"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-[#0F172A] focus:outline-hidden focus:ring-2 focus:ring-[#C29B38]"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => setInquiryStep(2)}
+                          className="py-3 px-4 bg-white border border-slate-300 hover:bg-slate-100 text-[#334155] font-semibold text-xs rounded-xl transition-colors cursor-pointer"
+                        >
+                          Back
+                        </button>
+                        <button
+                          type="submit"
+                          className="flex-1 py-3 bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <span>Request Free Callback</span>
+                          <ArrowRight className="w-4 h-4 text-[#DFB958]" />
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={handleLaunchFullAssessment}
+                        className="w-full py-2 text-xs font-semibold text-[#926B16] hover:text-[#0F172A] flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Or run full automated Eligibility Points Quiz</span>
+                      </button>
+                    </div>
+                  )}
+                </form>
+              )}
             </div>
 
-            {/* Connected Country Pill Badges matching image.png */}
-            <div className="w-full max-w-md pt-5 relative">
-              {/* Subtle Dashed Connector Lines */}
-              <div className="hidden sm:flex justify-around items-center px-4 -mt-2 mb-2 pointer-events-none">
-                <div className="w-px h-3 border-l-2 border-dashed border-blue-400" />
-                <div className="w-px h-3 border-l-2 border-dashed border-blue-400" />
-                <div className="w-px h-3 border-l-2 border-dashed border-blue-400" />
-                <div className="w-px h-3 border-l-2 border-dashed border-blue-400" />
-              </div>
-
-              {/* Badges Grid matching image.png */}
+            {/* Quick Country Selector Strip */}
+            <div className="w-full max-w-md pt-4">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <button
-                  onClick={() => handlePillClick('Canada', 'canada')}
-                  className="py-1.5 px-2 bg-white/95 hover:bg-white text-slate-800 rounded-full shadow-xs border border-slate-200 hover:border-blue-400 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer group"
-                >
-                  <span>🇨🇦</span>
-                  <span className="group-hover:text-blue-600">Canada</span>
-                </button>
-
-                <button
-                  onClick={() => handlePillClick('United Kingdom', 'united-kingdom')}
-                  className="py-1.5 px-2 bg-white/95 hover:bg-white text-slate-800 rounded-full shadow-xs border border-slate-200 hover:border-blue-400 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer group"
-                >
-                  <span>🇬🇧</span>
-                  <span className="group-hover:text-blue-600">UK</span>
-                  <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-blue-600" />
-                </button>
-
-                <button
-                  onClick={() => handlePillClick('Australia', 'australia')}
-                  className="py-1.5 px-2 bg-white/95 hover:bg-white text-slate-800 rounded-full shadow-xs border border-slate-200 hover:border-blue-400 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer group"
-                >
-                  <span>🇦🇺</span>
-                  <span className="group-hover:text-blue-600">Australia</span>
-                </button>
-
-                <button
-                  onClick={() => handlePillClick('USA', 'united-states')}
-                  className="py-1.5 px-2 bg-white/95 hover:bg-white text-slate-800 rounded-full shadow-xs border border-slate-200 hover:border-blue-400 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer group"
-                >
-                  <span>🇺🇸</span>
-                  <span className="group-hover:text-blue-600">USA</span>
-                  <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-blue-600" />
-                </button>
+                {[
+                  { flag: '🇨🇦', label: 'Canada', val: 'Canada', id: 'canada' },
+                  { flag: '🇬🇧', label: 'UK', val: 'United Kingdom', id: 'united-kingdom' },
+                  { flag: '🇦🇺', label: 'Australia', val: 'Australia', id: 'australia' },
+                  { flag: '🇺🇸', label: 'USA', val: 'USA', id: 'united-states' },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleQuickDestSelect(item.val, item.id)}
+                    className="py-2 px-2.5 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/15 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <span>{item.flag}</span>
+                    <span>{item.label}</span>
+                    <ChevronRight className="w-3 h-3 text-[#DFB958]" />
+                  </button>
+                ))}
               </div>
-
             </div>
-
           </div>
-
         </div>
       </div>
     </section>

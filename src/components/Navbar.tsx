@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  Phone, 
-  MapPin, 
-  Globe2, 
-  Search, 
-  FileText, 
-  Compass, 
-  Scale, 
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Phone,
+  MapPin,
+  Search,
+  FileText,
+  Scale,
   MessageCircle,
   GraduationCap,
   Plane,
   Briefcase,
-  Languages
+  Languages,
+  ShieldCheck,
 } from 'lucide-react';
 import { AimsLogo } from './AimsLogo';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../utils/translations';
+import { COMPANY_DETAILS } from '../data/aimsData';
 import { getWhatsAppRoutingDetails, getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
 
 interface NavbarProps {
@@ -65,47 +65,55 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80">
-      {/* Top Micro Utility Bar */}
-      <div className="bg-slate-900 text-slate-300 text-xs border-b border-slate-800 hidden sm:block">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#F8F9FA]/95 backdrop-blur-md border-b border-slate-200/90">
+      {/* Top Credential & Direct Desk Strip */}
+      <div className="bg-[#0F172A] text-slate-300 text-xs border-b border-slate-800/80 hidden sm:block">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
           <div className="flex items-center gap-4 text-[11px]">
             <span className="inline-flex items-center gap-1.5 text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-blue-400" />
-              <span>Court Road, Opposite District Courts, Hoshiarpur, Punjab</span>
+              <MapPin className="w-3.5 h-3.5 text-[#DFB958]" />
+              <span>Fatehgarh Chowk, Hoshiarpur, Punjab</span>
             </span>
             <span className="text-slate-700">|</span>
-            <span className="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>{routing.isOfficeHours ? 'Office Open (9 AM - 6 PM)' : 'After Hours Service Desk'}</span>
+            <span className="inline-flex items-center gap-1.5 text-[#DFB958] font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Punjab Govt. Licence No: {COMPANY_DETAILS.licenceNo}</span>
             </span>
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
-            {/* WhatsApp Routed Line */}
             <a
-              href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to consult with an expert.')}
+              href={`tel:${COMPANY_DETAILS.phoneRaw}`}
+              className="inline-flex items-center gap-1.5 text-slate-200 hover:text-[#DFB958] font-medium transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#DFB958]" />
+              <span className="tabular-nums">{COMPANY_DETAILS.phone}</span>
+            </a>
+            <span className="text-slate-700">|</span>
+            <a
+              href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to consult with an advisor.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#DFB958] hover:text-white font-semibold transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5" />
               <span>WhatsApp: {routing.formattedNumber}</span>
             </a>
 
             {/* Language Switcher */}
-            <div className="relative">
+            <div className="relative pl-2 border-l border-slate-700">
               <button
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
                 className="inline-flex items-center gap-1 text-slate-300 hover:text-white font-medium cursor-pointer"
+                aria-label="Select Language"
               >
-                <Languages className="w-3 h-3 text-blue-400" />
-                <span className="uppercase font-bold">{currentLanguage}</span>
+                <Languages className="w-3.5 h-3.5 text-[#DFB958]" />
+                <span className="uppercase font-semibold">{currentLanguage}</span>
                 <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
               {langDropdownOpen && (
-                <div className="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-xl border border-slate-200 py-1 z-50 text-slate-800">
+                <div className="absolute right-0 mt-1.5 w-32 bg-[#F8F9FA] rounded-lg shadow-xl border border-slate-200 py-1 z-50 text-[#0F172A]">
                   {languagesList.map((lang) => (
                     <button
                       key={lang.code}
@@ -113,12 +121,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onLanguageChange(lang.code);
                         setLangDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-blue-50 flex items-center justify-between cursor-pointer ${
-                        currentLanguage === lang.code ? 'font-bold text-blue-600 bg-blue-50/50' : 'text-slate-700'
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-slate-200/60 flex items-center justify-between cursor-pointer ${
+                        currentLanguage === lang.code ? 'font-bold text-[#0F172A] bg-[#C29B38]/15' : 'text-[#334155]'
                       }`}
                     >
                       <span>{lang.native}</span>
-                      <span className="text-[10px] text-slate-400 uppercase">{lang.code}</span>
+                      <span className="text-[10px] text-slate-500 uppercase">{lang.code}</span>
                     </button>
                   ))}
                 </div>
@@ -128,185 +136,154 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
+      {/* Main 3-Zone Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-20">
-          
-          {/* Logo matching image.png */}
-          <a 
-            href="#home" 
-            onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}
-            className="flex items-center gap-2 group cursor-pointer"
+        <div className="flex items-center justify-between h-16 sm:h-18">
+          {/* Zone 1: Brand Lockup */}
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('home');
+            }}
+            className="flex items-center gap-2 group cursor-pointer shrink-0"
           >
             <AimsLogo variant="horizontal" theme="light" showTagline={true} />
           </a>
 
-          {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-700">
-            
+          {/* Zone 2: Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-[#334155]">
             <button
               onClick={() => handleNavClick('home')}
-              className="px-3 py-2 text-blue-600 hover:text-blue-700 font-semibold cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
+              className="px-3 py-2 text-[#0F172A] hover:text-[#926B16] font-semibold cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors"
             >
               {t.navHome}
             </button>
 
             {/* Our Services Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setServicesDropdownOpen(true)}
               onMouseLeave={() => setServicesDropdownOpen(false)}
             >
               <button
                 onClick={() => handleNavClick('services')}
-                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
+                className="px-3 py-2 text-[#334155] hover:text-[#0F172A] cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors inline-flex items-center gap-1"
               >
                 <span>{t.navServices}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
 
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
+                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-lg border border-slate-200 py-2 animate-fadeIn z-50">
                   <button
                     onClick={() => handleNavClick('services')}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer"
                   >
-                    <GraduationCap className="w-4 h-4 text-blue-500" />
+                    <GraduationCap className="w-4 h-4 text-[#0F172A]" />
                     <div>
-                      <div className="font-semibold">Student Study Permits</div>
-                      <p className="text-[10px] text-slate-400">Canada SDS, UK, Australia, Europe</p>
+                      <div className="font-semibold text-[#0F172A]">Visa Appointments</div>
+                      <p className="text-[11px] text-slate-500">Study, Visitor & Family Filing</p>
                     </div>
                   </button>
                   <button
                     onClick={() => handleNavClick('services')}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer"
                   >
-                    <Plane className="w-4 h-4 text-emerald-500" />
+                    <Plane className="w-4 h-4 text-[#926B16]" />
                     <div>
-                      <div className="font-semibold">Tourist & Visitor Visas</div>
-                      <p className="text-[10px] text-slate-400">Dubai, Schengen, UK, USA 10-Yr</p>
+                      <div className="font-semibold text-[#0F172A]">Global Ticketing</div>
+                      <p className="text-[11px] text-slate-500">Student fares & 46kg baggage</p>
                     </div>
                   </button>
                   <button
                     onClick={() => handleNavClick('services')}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer"
                   >
-                    <Briefcase className="w-4 h-4 text-amber-500" />
+                    <Briefcase className="w-4 h-4 text-[#0F172A]" />
                     <div>
-                      <div className="font-semibold">Passport Seva & Tatkal</div>
-                      <p className="text-[10px] text-slate-400">Fast-track re-issue & lost booklet</p>
+                      <div className="font-semibold text-[#0F172A]">Documentation & Passport</div>
+                      <p className="text-[11px] text-slate-500">Tatkal Seva, Apostille & Audits</p>
                     </div>
                   </button>
                   <button
                     onClick={() => handleNavClick('services')}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer border-t border-slate-100"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer border-t border-slate-100"
                   >
-                    <FileText className="w-4 h-4 text-teal-500" />
+                    <FileText className="w-4 h-4 text-[#926B16]" />
                     <div>
-                      <div className="font-semibold">Refusal Overturning / CAIPS</div>
-                      <p className="text-[10px] text-slate-400">Legal case restructuring</p>
+                      <div className="font-semibold text-[#0F172A]">Tour Packages</div>
+                      <p className="text-[11px] text-slate-500">Dubai, Europe & Custom Holidays</p>
                     </div>
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Visa Options Dropdown */}
-            <div 
+            {/* Destinations Dropdown */}
+            <div
               className="relative"
               onMouseEnter={() => setVisaDropdownOpen(true)}
               onMouseLeave={() => setVisaDropdownOpen(false)}
             >
               <button
                 onClick={() => handleNavClick('destinations')}
-                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
+                className="px-3 py-2 text-[#334155] hover:text-[#0F172A] cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors inline-flex items-center gap-1"
               >
                 <span>{t.navVisaOptions}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
 
               {visaDropdownOpen && (
-                <div className="absolute top-full left-0 w-60 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇨🇦</span>
-                    <span className="font-medium">Canada Visas (Study / PR / Visitor)</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇬🇧</span>
-                    <span className="font-medium">United Kingdom (Student / Tourist)</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇦🇺</span>
-                    <span className="font-medium">Australia (Subclass 500 / 600)</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇺🇸</span>
-                    <span className="font-medium">USA (F-1 Student / B1-B2)</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇪🇺</span>
-                    <span className="font-medium">Schengen Europe (29 Nations)</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('destinations')}
-                    className="w-full text-left px-4 py-2 text-xs hover:bg-blue-50 flex items-center gap-2 text-slate-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    <span>🇦🇪</span>
-                    <span className="font-medium">Dubai & UAE (30/60 Days e-Visa)</span>
-                  </button>
+                <div className="absolute top-full left-0 w-60 bg-white rounded-xl shadow-lg border border-slate-200 py-2 animate-fadeIn z-50">
+                  {[
+                    { flag: '🇨🇦', label: 'Canada (Study / Super Visa)' },
+                    { flag: '🇬🇧', label: 'United Kingdom (Student / Visit)' },
+                    { flag: '🇦🇺', label: 'Australia (Subclass 500 / 600)' },
+                    { flag: '🇺🇸', label: 'USA (F-1 / B1-B2)' },
+                    { flag: '🇪🇺', label: 'Schengen Europe (27 Nations)' },
+                    { flag: '🇦🇪', label: 'Dubai & UAE (e-Visa)' },
+                  ].map((d) => (
+                    <button
+                      key={d.label}
+                      onClick={() => handleNavClick('destinations')}
+                      className="w-full text-left px-4 py-2 text-xs hover:bg-[#F4F5F7] flex items-center gap-2 text-[#334155] hover:text-[#0F172A] cursor-pointer"
+                    >
+                      <span>{d.flag}</span>
+                      <span className="font-medium">{d.label}</span>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
 
-            <button
-              onClick={() => handleNavClick('about')}
-              className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
-            >
-              {t.navAboutUs}
-            </button>
-
-            {/* Resources / Hub Tools Dropdown */}
-            <div 
+            {/* Hub Tools Dropdown */}
+            <div
               className="relative"
               onMouseEnter={() => setResourcesDropdownOpen(true)}
               onMouseLeave={() => setResourcesDropdownOpen(false)}
             >
               <button
-                className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors inline-flex items-center gap-1"
+                className="px-3 py-2 text-[#334155] hover:text-[#0F172A] cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors inline-flex items-center gap-1"
               >
                 <span>{t.navResources}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
 
               {resourcesDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 animate-fadeIn z-50">
+                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-lg border border-slate-200 py-2 animate-fadeIn z-50">
                   <button
                     onClick={() => {
                       setResourcesDropdownOpen(false);
                       if (onOpenTracker) onOpenTracker();
                       else handleNavClick('tracker');
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer"
                   >
-                    <Search className="w-4 h-4 text-blue-500" />
+                    <Search className="w-4 h-4 text-[#0F172A]" />
                     <div>
-                      <div className="font-semibold text-slate-800">Live Application Tracker</div>
-                      <p className="text-[10px] text-slate-400">Track dossier, biometrics & status</p>
+                      <div className="font-semibold text-[#0F172A]">Live Application Tracker</div>
+                      <p className="text-[11px] text-slate-500">Track dossier & biometrics status</p>
                     </div>
                   </button>
 
@@ -316,12 +293,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                       if (onOpenComparison) onOpenComparison();
                       else handleNavClick('comparison');
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer"
                   >
-                    <Scale className="w-4 h-4 text-emerald-500" />
+                    <Scale className="w-4 h-4 text-[#926B16]" />
                     <div>
-                      <div className="font-semibold text-slate-800">Side-by-Side Country Compare</div>
-                      <p className="text-[10px] text-slate-400">Compare fees, funds & PR rights</p>
+                      <div className="font-semibold text-[#0F172A]">Side-by-Side Country Compare</div>
+                      <p className="text-[11px] text-slate-500">Compare funds, tuition & PR rights</p>
                     </div>
                   </button>
 
@@ -330,12 +307,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setResourcesDropdownOpen(false);
                       handleNavClick('faq');
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-blue-50 text-xs flex items-center gap-2.5 text-slate-700 hover:text-blue-600 cursor-pointer border-t border-slate-100"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#F4F5F7] text-xs flex items-center gap-2.5 text-[#334155] hover:text-[#0F172A] cursor-pointer border-t border-slate-100"
                   >
-                    <FileText className="w-4 h-4 text-amber-500" />
+                    <FileText className="w-4 h-4 text-[#0F172A]" />
                     <div>
-                      <div className="font-semibold text-slate-800">Visa FAQs & Knowledge Base</div>
-                      <p className="text-[10px] text-slate-400">Direct consular answers</p>
+                      <div className="font-semibold text-[#0F172A]">Visa FAQs & Knowledge Base</div>
+                      <p className="text-[11px] text-slate-500">Direct consular answers</p>
                     </div>
                   </button>
                 </div>
@@ -343,66 +320,64 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <button
+              onClick={() => handleNavClick('about')}
+              className="px-3 py-2 text-[#334155] hover:text-[#0F172A] cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors"
+            >
+              {t.navAboutUs}
+            </button>
+
+            <button
               onClick={() => handleNavClick('contact')}
-              className="px-3 py-2 text-slate-700 hover:text-blue-600 cursor-pointer rounded-lg hover:bg-slate-100/70 transition-colors"
+              className="px-3 py-2 text-[#334155] hover:text-[#0F172A] cursor-pointer rounded-lg hover:bg-slate-200/50 transition-colors"
             >
               {t.navContact}
             </button>
           </nav>
 
-          {/* Right Action: "Get a Free Assessment" Button as shown in image.png */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Zone 3: Single Primary Action */}
+          <div className="hidden sm:flex items-center gap-3 shrink-0">
             <button
               onClick={onOpenEligibility}
-              className="px-5 py-2.5 bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold text-sm rounded-lg shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all cursor-pointer flex items-center gap-2 group"
+              className="px-5 py-2.5 bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-sm rounded-lg border border-slate-800 transition-all cursor-pointer flex items-center gap-2 shadow-xs"
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C29B38]" />
               <span>{t.getFreeAssessment}</span>
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Controls */}
           <div className="flex sm:hidden items-center gap-2">
             <button
               onClick={onOpenEligibility}
-              className="px-3 py-1.5 bg-[#1d4ed8] text-white text-xs font-bold rounded-md"
+              className="px-3 py-2 bg-[#0F172A] text-white text-xs font-semibold rounded-lg"
             >
-              Free Check
+              Free Assessment
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              className="p-2 rounded-lg text-[#334155] hover:text-[#0F172A] hover:bg-slate-200/60"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
-
         </div>
       </div>
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fadeIn shadow-lg">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <AimsLogo variant="horizontal" theme="light" showTagline={true} />
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
-              aria-label="Close menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-            <span className="text-xs font-semibold text-slate-500">Choose Language:</span>
+        <div className="sm:hidden bg-[#F8F9FA] border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fadeIn shadow-lg">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+            <span className="text-[11px] font-bold text-[#0F172A]">
+              Licence No: {COMPANY_DETAILS.licenceNo}
+            </span>
             <div className="flex gap-1.5">
               {languagesList.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => onLanguageChange(lang.code)}
-                  className={`px-2.5 py-1 text-xs rounded font-bold cursor-pointer ${
-                    currentLanguage === lang.code ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+                  className={`px-2.5 py-1 text-xs rounded font-semibold cursor-pointer ${
+                    currentLanguage === lang.code ? 'bg-[#0F172A] text-white' : 'bg-white text-[#334155] border border-slate-200'
                   }`}
                 >
                   {lang.native}
@@ -411,81 +386,56 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-sm font-medium text-slate-800">
-            <button 
-              onClick={() => handleNavClick('home')}
-              className="p-2.5 text-left rounded-lg hover:bg-blue-50 font-semibold text-blue-600"
-            >
+          <div className="grid grid-cols-2 gap-2 text-sm font-medium text-[#0F172A]">
+            <button onClick={() => handleNavClick('home')} className="p-2.5 text-left rounded-lg hover:bg-white font-semibold">
               {t.navHome}
             </button>
-            <button 
-              onClick={() => handleNavClick('services')}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
-            >
+            <button onClick={() => handleNavClick('services')} className="p-2.5 text-left rounded-lg hover:bg-white">
               {t.navServices}
             </button>
-            <button 
-              onClick={() => handleNavClick('destinations')}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
-            >
+            <button onClick={() => handleNavClick('destinations')} className="p-2.5 text-left rounded-lg hover:bg-white">
               {t.navVisaOptions}
             </button>
-            <button 
-              onClick={() => handleNavClick('about')}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100"
-            >
+            <button onClick={() => handleNavClick('about')} className="p-2.5 text-left rounded-lg hover:bg-white">
               {t.navAboutUs}
             </button>
-            <button 
+            <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 if (onOpenTracker) onOpenTracker();
                 else handleNavClick('tracker');
               }}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100 flex items-center gap-1.5"
+              className="p-2.5 text-left rounded-lg hover:bg-white flex items-center gap-1.5"
             >
-              <Search className="w-3.5 h-3.5 text-blue-600" />
+              <Search className="w-3.5 h-3.5 text-[#926B16]" />
               <span>{t.navTracker}</span>
             </button>
-            <button 
+            <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 if (onOpenComparison) onOpenComparison();
                 else handleNavClick('comparison');
               }}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100 flex items-center gap-1.5"
+              className="p-2.5 text-left rounded-lg hover:bg-white flex items-center gap-1.5"
             >
-              <Scale className="w-3.5 h-3.5 text-emerald-600" />
+              <Scale className="w-3.5 h-3.5 text-[#926B16]" />
               <span>{t.navComparison}</span>
             </button>
-            <button 
-              onClick={() => handleNavClick('contact')}
-              className="p-2.5 text-left rounded-lg hover:bg-slate-100 col-span-2"
-            >
+            <button onClick={() => handleNavClick('contact')} className="p-2.5 text-left rounded-lg hover:bg-white col-span-2">
               {t.navContact}
             </button>
           </div>
 
-          <div className="pt-2 border-t border-slate-100 space-y-2">
+          <div className="pt-2 border-t border-slate-200 space-y-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenEligibility();
+                onOpenBooking();
               }}
-              className="w-full py-2.5 bg-blue-600 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-2.5 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] font-bold rounded-lg text-xs flex items-center justify-center gap-2 shadow-xs"
             >
-              <span>{t.getFreeAssessment}</span>
+              <span>Book Free Consultation</span>
             </button>
-
-            <a
-              href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I would like to consult with an expert.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-2 bg-emerald-50 text-emerald-800 font-semibold rounded-lg text-xs flex items-center justify-center gap-2 border border-emerald-200"
-            >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-              <span>WhatsApp Official Desk</span>
-            </a>
           </div>
         </div>
       )}

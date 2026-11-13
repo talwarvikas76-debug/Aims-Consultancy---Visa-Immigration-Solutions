@@ -1,16 +1,17 @@
 import { Destination, FAQItem, ServiceItem, Testimonial } from '../types';
+import { AIMS_MEDIA } from '../assets/media';
 
 export const COMPANY_DETAILS = {
   name: 'AIMS Consultancy',
   tagline: 'Your Gateway to Global Travel & Visa Solutions',
   subheading: 'Trusted Visa, Passport, Air Ticketing & Immigration Services in Hoshiarpur, Punjab',
-  address: 'AIMS Consultancy, Hoshiarpur, Punjab, India - 146001',
+  address: 'AIMS Consultancy, Fatehgarh Chowk, Hoshiarpur, Punjab, India - 146001',
   city: 'Hoshiarpur',
   state: 'Punjab',
   pincode: '146001',
   country: 'India',
-  phone: '+91 91933 19128',
-  phoneRaw: '919193319128',
+  phone: '+91 95927 47000',
+  phoneRaw: '919592747000',
   afterHoursPhone: '+91 95927 47000',
   afterHoursPhoneRaw: '919592747000',
   email: 'info@aimsconsultancy.in',
@@ -19,7 +20,10 @@ export const COMPANY_DETAILS = {
   closedDays: 'Sunday Closed',
   upiId: 'talwarvikasaxisbank@axl',
   consultationFee: 0,
-  trustTag: 'Government Registered Overseas Advisory',
+  trustTag: 'Punjab Government Licensed Overseas Advisory',
+  registrationNo: '288/MA/HOSHIARPUR',
+  licenceNo: '288/MA/HOSHIARPUR',
+  registrationAuthority: 'Government of Punjab Approved Overseas Advisory (Licence No. 288/MA/HOSHIARPUR)',
   stats: [
     { value: 100, prefix: 'Over ', suffix: '+', label: 'Successful Visas', description: 'Visas processed with verified consular compliance' },
     { value: 10, suffix: '+', label: 'Years of Experience', description: 'Decade of reliable advisory in Punjab' },
@@ -38,7 +42,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'High Demand',
     timeline: '3 - 8 Weeks',
     recommendedFor: 'Students & Graduates seeking international higher education',
-    imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceVisaDossier,
     features: [
       'University & College Selection based on career roadmap',
       'Statement of Purpose (SOP) & Letter of Explanation auditing',
@@ -71,7 +75,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Popular',
     timeline: '5 - 25 Days',
     recommendedFor: 'Vacationers, families, and solo travellers',
-    imageUrl: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     features: [
       'Day-wise curated travel itineraries for consular submission',
       'VFS / BLS / Embassy appointment scheduling',
@@ -104,7 +108,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Corporate Priority',
     timeline: '3 - 15 Days',
     recommendedFor: 'Entrepreneurs, business executives, and commercial delegates',
-    imageUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.officeAdvisoryDesk,
     features: [
       'Invitation letter verification and compliance mapping',
       'Company sponsorship documentation review',
@@ -134,7 +138,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Family First',
     timeline: '2 - 6 Weeks',
     recommendedFor: 'Parents, spouses, and extended family members',
-    imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.officeAdvisoryDesk,
     features: [
       'Invitation and sponsorship declaration review',
       'Super Visa medical insurance compliance verification',
@@ -166,7 +170,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'PSK Certified',
     timeline: '10 - 20 Days',
     recommendedFor: 'First-time passport seekers of all ages',
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceVisaDossier,
     features: [
       'End-to-end online filing on Passport Seva Portal',
       'Document mapping conforming to Ministry of External Affairs rules',
@@ -196,7 +200,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Zero Error Rate',
     timeline: '7 - 14 Days',
     recommendedFor: 'Frequent travelers and expiring passport holders',
-    imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceVisaDossier,
     features: [
       'Exhausted booklet or validity expiry handling',
       'Name change / address update documentation proofing',
@@ -224,7 +228,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Express Service',
     timeline: '2 - 4 Days',
     recommendedFor: 'Urgent emergency travelers',
-    imageUrl: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceAirTicketing,
     features: [
       'Emergency documentation verification (Annexure F/Annexure E)',
       'Same-day online submission and expedited slot allocation',
@@ -250,7 +254,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Legal Review',
     timeline: '10 - 20 Days',
     recommendedFor: 'Individuals with misplaced or water-damaged passports',
-    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.officeAdvisoryDesk,
     features: [
       'Police FIR / Non-Traceable Certificate assistance',
       'Notarized affidavit preparation (Annexure L / F)',
@@ -279,7 +283,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Direct GDS Desk',
     timeline: 'Instant Confirmation',
     recommendedFor: 'Students, families, and long-distance travelers',
-    imageUrl: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceAirTicketing,
     features: [
       'Special student baggage allowances (46kg+ on select carriers)',
       'Layover optimization to minimize transit fatigue',
@@ -307,7 +311,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Group Discount',
     timeline: 'Same-Day Quoting',
     recommendedFor: 'Parties of 10 or more passengers',
-    imageUrl: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceAirTicketing,
     features: [
       'Negotiated bulk airfare contracts',
       'Staggered passenger name list (PNR) entries',
@@ -328,6 +332,40 @@ export const SERVICES_DATA: ServiceItem[] = [
 
   // Holiday Planning
   {
+    id: 'holiday-panj-takht-5star',
+    category: 'holiday',
+    title: 'Exclusive 5-Star Panj Takht Sahib Spiritual Pilgrimage',
+    description: 'Divine 10-day yatra across all Five Sikh Takhts (Sri Akal Takht, Keshgarh Sahib, Damdama Sahib, Patna Sahib & Sachkhand Hazur Sahib) with 5-star hotel suites, scheduled domestic flights, private luxury fleet, and dedicated senior citizen wheelchair care.',
+    badge: 'Exclusive 5-Star Pilgrimage (Sample Preview)',
+    timeline: '10 Days / 9 Nights',
+    recommendedFor: 'NRI Families, Devout Sikh Sangat, and Senior Citizens desiring dignified comfort',
+    imageUrl: '/takht-akal-sahib.jpg',
+    features: [
+      'All 5 Sacred Takhts covered (Punjab, Bihar & Maharashtra)',
+      '5-Star Luxury Stays (Taj Swarna, Hyatt, The Kikar Lodge, Taj Patna, Visawa Palace)',
+      'Scheduled domestic flights connecting all pilgrimage states (Zero grueling road/train fatigue)',
+      'Dedicated accompanying Sikh Scholar, Historian guide & pre-arranged family Ardas',
+      'Special elderly care: Wheelchair assistance at airports & Gurdwara parikramas',
+      'Chauffeur-driven Toyota Innova Hycross or Innova Crysta only (Plush Captain Seats & Rear AC)',
+    ],
+    hiddenDetails: {
+      requirements: [
+        'Valid Government ID (Aadhaar / Passport for domestic flight check-ins)',
+        'Dietary preferences or diabetic meal disclosure (for customized satvik menu)',
+        'Senior citizen mobility disclosures (to pre-book wheelchair & golf-cart services)',
+        'Preferred date window (October to March recommended)',
+      ],
+      documentation: [
+        'Full 10-Day VIP Pilgrimage Itinerary Voucher with 24/7 dedicated concierge contacts',
+        'Confirmed domestic flight e-tickets with baggage allowances',
+        '5-Star hotel confirmation vouchers with verified accessible suite bookings',
+        'Special Ardas & Saropa facilitation slip in your family’s name',
+      ],
+      expertTip: 'We coordinate directly with local Gurdwara managements to organize dignified, unhurried Darshans for elders and provide sacred Palki Sahib seva access at Sri Harmandir Sahib.',
+      faq: 'Can international NRI pilgrims join directly from Delhi or Amritsar airports? Yes, our executive chauffeurs provide direct meet-and-greet at Delhi (DEL) and Amritsar (ATQ) international terminals.',
+    },
+  },
+  {
     id: 'holiday-dubai',
     category: 'holiday',
     title: 'Dubai & UAE Leisure Getaways',
@@ -335,7 +373,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Bestseller Tour',
     timeline: '3 - 7 Nights',
     recommendedFor: 'Families, couples, and shopping enthusiasts',
-    imageUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     features: [
       'Pre-approved Dubai Tourist Visa included in package',
       'Chauffeur-driven private airport transfers in Dubai',
@@ -363,7 +401,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Iconic Journey',
     timeline: '8 - 14 Nights',
     recommendedFor: 'Honeymooners, cultural explorers, and luxury travellers',
-    imageUrl: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     features: [
       'Scenic Swiss Glacier Express and Eurostar train passes',
       'Central hotel stays near historic downtowns',
@@ -392,7 +430,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Mandatory for Visa',
     timeline: 'Instant Issue',
     recommendedFor: 'All international travelers and study permit holders',
-    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceVisaDossier,
     features: [
       'Emergency medical evacuation up to $500,000 USD coverage',
       'Flight cancellation, baggage loss, and passport theft protection',
@@ -419,7 +457,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: 'Zero Markup Cards',
     timeline: 'Same-Day Pickup',
     recommendedFor: 'Students paying university fees and overseas vacationers',
-    imageUrl: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.officeAdvisoryDesk,
     features: [
       'Direct currency exchange for USD, CAD, GBP, EUR, AUD, AED',
       'University tuition wire transfer assistance via RBI authorized dealers',
@@ -451,7 +489,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '4 - 10 Weeks',
     intakesOrSeason: 'Sept (Fall), Jan (Winter), May (Spring)',
     highlights: ['Post-Graduation Work Permit (PGWP) eligibility', 'High quality of life & multicultural safety', 'Strong Punjabi diaspora support'],
-    imageUrl: 'https://images.unsplash.com/photo-1517935703635-2719054546e3?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     hiddenDetails: {
       topUniversitiesOrSpots: ['University of Toronto', 'UBC Vancouver', 'McGill University', 'Seneca & Humber Colleges'],
       financialRequirement: 'GIC Account with $20,635 CAD mandatory deposit + 1st year paid college tuition receipt.',
@@ -469,7 +507,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '3 - 6 Weeks',
     intakesOrSeason: 'September & January Intakes',
     highlights: ['2-Year Graduate Immigration Route (PSW)', 'Direct flight connections from Delhi to London & Birmingham', 'Fast-track priority visa option available'],
-    imageUrl: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceVisaDossier,
     hiddenDetails: {
       topUniversitiesOrSpots: ['University of Manchester', 'King’s College London', 'University of Birmingham', 'Coventry & Greenwich'],
       financialRequirement: '28-day maintenance funds held in bank account (£12,006 outside London, £15,180 inside London).',
@@ -487,7 +525,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '4 - 8 Weeks',
     intakesOrSeason: 'February & July Intakes',
     highlights: ['Lucrative regional post-study work stream', 'High minimum wage standards for students', 'Direct digital visa application processing'],
-    imageUrl: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     hiddenDetails: {
       topUniversitiesOrSpots: ['University of Melbourne', 'UNSW Sydney', 'Monash University', 'Deakin & Griffith University'],
       financialRequirement: 'Living cost proof of $29,710 AUD/year + 1-year tuition balance verified under GS guidelines.',
@@ -505,7 +543,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '2 - 4 Working Days',
     intakesOrSeason: 'Ideal Travel: October to April',
     highlights: ['100% paperless e-Visa with fastest turnaround', 'No physical embassy interview required', 'Convenient 3.5 hour flights from Punjab/Delhi'],
-    imageUrl: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.heroGlobalHorizon,
     hiddenDetails: {
       topUniversitiesOrSpots: ['Burj Khalifa & Downtown', 'Palm Jumeirah & Marina', 'Abu Dhabi Sheikh Zayed Grand Mosque', 'Dubai Mall'],
       financialRequirement: 'No minimum bank balance required for standard 30-day and 60-day e-Visas. Guaranteed fast issuance.',
@@ -523,7 +561,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '15 - 30 Working Days',
     intakesOrSeason: 'Peak Tourism: May to September',
     highlights: ['Unrestricted travel across 27 sovereign nations', 'Tuition-free public universities in Germany', 'Rich cultural and scenic heritage'],
-    imageUrl: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     hiddenDetails: {
       topUniversitiesOrSpots: ['Paris & Eiffel Tower', 'Swiss Alps & Interlaken', 'Rome Colosseum', 'TU Munich & Heidelberg (Germany)'],
       financialRequirement: '€30,000 travel insurance policy + minimum €75-100 per day of stay backed by 6 months bank statement.',
@@ -541,7 +579,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: 'Consular Appointment Dependent',
     intakesOrSeason: 'Fall (August) & Spring (January)',
     highlights: ['OPT STEM extension for up to 3 years', 'Long-term 10-year multiple-entry visitor visa stamp', 'Rigorous interview preparation included'],
-    imageUrl: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.heroGlobalHorizon,
     hiddenDetails: {
       topUniversitiesOrSpots: ['New York Manhattan & Times Square', 'Silicon Valley & California', 'Harvard & MIT Boston', 'Grand Canyon'],
       financialRequirement: 'Form I-20 financial coverage (1st-year full tuition + living costs) through liquid bank savings, fixed deposits, or education loans.',
@@ -559,7 +597,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '4 - 7 Working Days',
     intakesOrSeason: 'Year-Round Destination',
     highlights: ['Streamlined authorized visa agent filing', 'Ideal stopover for journeys to Australia and New Zealand', 'Sentosa & Universal Studios attractions'],
-    imageUrl: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceAirTicketing,
     hiddenDetails: {
       topUniversitiesOrSpots: ['Marina Bay Sands', 'Gardens by the Bay', 'Sentosa Island', 'Universal Studios Singapore'],
       financialRequirement: '6 months bank statement showing minimum ₹1,00,000+ balance with stable transaction pattern.',
@@ -577,7 +615,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     processingTime: '3 - 5 Days or Instant VoA',
     intakesOrSeason: 'November to March',
     highlights: ['High-value luxury resorts at affordable prices', 'Seamless group and family tour packages', 'Short travel duration from India'],
-    imageUrl: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: AIMS_MEDIA.serviceTourPackages,
     hiddenDetails: {
       topUniversitiesOrSpots: ['Bangkok Grand Palace', 'Phuket & Phi Phi Islands', 'Pattaya Coral Island', 'Chiang Mai Mountains'],
       financialRequirement: 'Minimum 10,000 THB (or approx. ₹25,000 INR) cash or bank statement per person on entry.',
@@ -688,7 +726,7 @@ export const FAQ_DATA: FAQItem[] = [
     id: 'faq-4',
     category: 'general',
     question: 'Can I reschedule or modify my booked consultation slot?',
-    answer: 'Yes. You can reschedule your appointment up to 24 hours in advance at zero cost. Simply message our official WhatsApp number (+91 91933 19128) or email us with your Booking Reference Code, and our desk will reassign your preferred morning or afternoon slot.',
+    answer: 'Yes. You can reschedule your appointment up to 24 hours in advance at zero cost. Simply message our official WhatsApp number (+91 95927 47000) or email us with your Booking Reference Code, and our desk will reassign your preferred morning or afternoon slot.',
   },
   {
     id: 'faq-5',
@@ -725,6 +763,6 @@ export const VIRTUAL_ASSISTANT_KB: Record<string, string> = {
   forex: 'Forex Cards & Tuition Remittance: Chip-and-pin multi-currency travel cards (USD, CAD, GBP, EUR, AUD) with competitive exchange rates and zero markup. Assistance with overseas university tuition wire transfers under RBI LRS guidelines.',
   fee: 'Our consultations, virtual assistant guidance, profile eligibility evaluations, and document checklists are 100% completely FREE! We charge ZERO consultation fees. When you choose our full case management filing services, we provide transparent, fixed agency pricing with zero hidden charges.',
   consultation: 'All consultations at AIMS Consultancy are 100% FREE with zero charges or booking fees! You can schedule a visit to our Hoshiarpur office or connect with a senior advisor on WhatsApp for complimentary advice.',
-  address: 'Our primary office is located at Court Road, Opposite District Courts, Hoshiarpur, Punjab - 146001. We are open Monday to Saturday from 9:00 AM to 6:00 PM. Free walk-ins are warmly welcome!',
-  contact: 'You can call or WhatsApp our official helpline at +91 91933 19128, or email us at info@aimsconsultancy.in. We offer prompt, free guidance for all your travel and visa queries!',
+  address: 'Our primary office is located at Fatehgarh Chowk, Hoshiarpur, Punjab - 146001. We are open Monday to Saturday from 9:00 AM to 6:00 PM. Free walk-ins are warmly welcome!',
+  contact: 'You can call or WhatsApp our official helpline at +91 95927 47000, or email us at info@aimsconsultancy.in. We offer prompt, free guidance for all your travel and visa queries!',
 };

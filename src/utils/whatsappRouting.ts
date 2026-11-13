@@ -90,11 +90,11 @@ export function getWhatsAppRoutingDetails(): WhatsAppRoutingInfo {
       isOfficeHours: true,
       isOpen: true,
       phone: COMPANY_DETAILS.phone,
-      phoneRaw: COMPANY_DETAILS.phoneRaw, // '919193319128'
-      formattedNumber: '91933-19128',
+      phoneRaw: COMPANY_DETAILS.phoneRaw, // '919592747000'
+      formattedNumber: '95927-47000',
       deskLabel: 'Primary Office Desk',
       statusBadge: 'Office Hours Active',
-      statusDetail: `Mon-Sat 9AM-6PM IST • Connecting to 91933-19128`,
+      statusDetail: `Mon-Sat 9AM-6PM IST • Connecting to 95927-47000`,
       currentIstTime: `${day}, ${timeString} IST`,
     };
   } else {
@@ -119,7 +119,7 @@ export function getWhatsAppDeliveryUrl(
   message: string,
   forceRecipient?: 'office' | 'afterhours'
 ): string {
-  let targetRaw = COMPANY_DETAILS.phoneRaw; // default 919193319128
+  let targetRaw = COMPANY_DETAILS.phoneRaw; // default 919592747000
 
   if (forceRecipient === 'office') {
     targetRaw = COMPANY_DETAILS.phoneRaw;

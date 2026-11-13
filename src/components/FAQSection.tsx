@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Search, MessageCircle } from 'lucide-react';
-import { FAQ_DATA, COMPANY_DETAILS } from '../data/aimsData';
+import { ChevronDown, ChevronUp, Search, MessageCircle } from 'lucide-react';
+import { FAQ_DATA } from '../data/aimsData';
 import { getWhatsAppDeliveryUrl } from '../utils/whatsappRouting';
+import { AimsLogo } from './AimsLogo';
 
 export const FAQSection: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>('faq-1');
@@ -30,19 +31,18 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200 text-slate-800">
+    <section id="faq" className="py-16 sm:py-20 bg-[#F4F5F7] border-b border-slate-200/90 text-[#334155]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide uppercase">
-            <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
-            <span>Got Questions?</span>
+        <div className="text-center max-w-2xl mx-auto space-y-2.5">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#926B16]">
+            <AimsLogo variant="emblem" className="w-4 h-4" />
+            <span>Knowledge Base</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight font-display">
             Frequently Asked Questions
           </h2>
-          <p className="text-slate-600 text-base">
+          <p className="text-[#334155] text-base leading-[1.65]">
             Everything you need to know regarding consular timelines, passport documents, and free consultation booking.
           </p>
 
@@ -54,7 +54,7 @@ export const FAQSection: React.FC = () => {
               placeholder="Search frequently asked questions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs"
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-[#0F172A] placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#C29B38] shadow-xs"
             />
           </div>
 
@@ -64,10 +64,10 @@ export const FAQSection: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border ${
                   activeCategory === cat.id
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
+                    ? 'bg-[#0F172A] text-white border-[#0F172A]'
+                    : 'bg-white text-[#334155] hover:text-[#0F172A] border-slate-200'
                 }`}
               >
                 {cat.label}
@@ -84,23 +84,23 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={faq.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden transition-colors"
+                className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden transition-colors"
               >
                 <button
                   type="button"
                   onClick={() => toggleItem(faq.id)}
-                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-hidden hover:bg-slate-50/60"
+                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-hidden hover:bg-[#F8F9FA]"
                 >
-                  <span className="font-bold text-sm sm:text-base text-slate-900">
+                  <span className="font-bold text-sm sm:text-base text-[#0F172A]">
                     {faq.question}
                   </span>
-                  <span className="p-1 rounded-lg bg-blue-50 text-blue-600 shrink-0">
+                  <span className="p-1.5 rounded-lg bg-[#F4F5F7] text-[#0F172A] shrink-0">
                     {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  <div className="px-5 pb-5 pt-2 text-xs sm:text-sm text-[#334155] leading-[1.7] border-t border-slate-100">
                     <p>{faq.answer}</p>
                   </div>
                 )}
@@ -109,28 +109,35 @@ export const FAQSection: React.FC = () => {
           })}
 
           {filteredFaqs.length === 0 && (
-            <div className="text-center py-8 text-slate-400 text-xs">
+            <div className="text-center py-8 text-slate-500 text-xs">
               No matching questions found for "{searchQuery}".
             </div>
           )}
         </div>
 
         {/* WhatsApp Help Prompt */}
-        <div className="mt-10 text-center">
-          <p className="text-xs text-slate-500">
-            Have a case-specific question not listed here?
-          </p>
+        <div className="mt-12 bg-[#0F172A] text-white rounded-2xl p-6 border border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0">
+              <AimsLogo variant="emblem" className="w-7 h-7" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white">Have a case-specific question?</h4>
+              <p className="text-xs text-slate-300 mt-0.5">
+                Our senior visa advisors in Hoshiarpur provide free 1-on-1 dossier evaluations.
+              </p>
+            </div>
+          </div>
           <a
             href={getWhatsAppDeliveryUrl('Hello AIMS Consultancy, I have a specific question regarding my visa / passport application.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+            className="px-5 py-2.5 bg-[#C29B38] hover:bg-[#B38D2D] text-[#0F172A] rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-600" />
-            <span>Ask our senior advisor on WhatsApp</span>
+            <MessageCircle className="w-4 h-4" />
+            <span>Chat on WhatsApp (95927-47000)</span>
           </a>
         </div>
-
       </div>
     </section>
   );
